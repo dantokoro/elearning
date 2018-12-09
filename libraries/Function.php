@@ -27,15 +27,18 @@
     function print_rating($rating_point) 
     {
         $star = round_half_integer($rating_point);
-        echo $star;
-        while($star > 0) {
-            if($star > 1) {
-                echo '<span class="fa fa-star checked"></span>';
+        echo $star."\t";
+        for($i = 0; $i < 5; $i++) {
+            if($star >= 1) {
+                echo '<span class="fa fa-star" style="color:yellow; font-size:17px"></span>';
                 $star -= 1;
-            } 
-            else {
-                echo '<span class="fa fa-star-half-o" style="color:yellow"></span>';
+            }
+            else if($star >= 0.5) {
+                echo '<span class="fa fa-star-half-o" style="color:yellow; font-size:17px"></span>';
                 $star -= 0.5;
+            }
+            else {
+                echo '<span class="fa fa-star-o" style="color:yellow; font-size:17px"></span>';
             }
         }        
         echo '<span class="course-ratings-count">(4 votes) </span>';

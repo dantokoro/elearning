@@ -104,11 +104,9 @@
                     <div class="course-content">
                         <figure class="course-thumbnail">
                             <?php
-                                //<a href="#"><img src="../user/images/1.jpg" alt=""></a>
-                                $query = 'SELECT * FROM "Course" WHERE course_id = 4';
-                                $result = pg_query($conn, $query) or die(pgerrormessage());
+                                $query = 'SELECT "Course".*, count(course_id) as count FROM "Course" NATURAL JOIN "Vote" NATURAL JOIN "AssignTeacher" GROUP BY "Course".course_id HAVING course_id = 4';
+                                $result = pg_query($conn, $query) or die(pg_errormessage());
                                 $course = pg_fetch_array($result);
-                                echo $course['avatar'];
                                 echo '<a href="#"> <img src='.$course['avatar'].'alt=""> </a>';
                                 
                             ?>
@@ -121,12 +119,20 @@
                                     print_rating(4.5);
                                 ?>
                                 </div><!-- .course-ratings -->
-                                <h2 class="entry-title"><a href="#">JLPT N1 in 1 month</a></h2>
+                                <?php echo '<h2 class="entry-title"><a href="#">'.$course['name'].'</a></h2>' ?>
 
                                 <div class="entry-meta flex align-items-center">
-                                    <div class="course-author"><a href="#">Bach Sensei </a></div>
+                                    <?php 
+                                    $query = 'SELECT * FROM "Teacher" WHERE teacher_id = 7';
+                                    $result = pg_query($conn, $query) or die(pg_errormessage());
+                                    $teacher = pg_fetch_array($result);
+                                    echo '<div class="course-author"><a href="#">'.$teacher['name'].'</a></div>';
+                                    ?>
 
-                                    <div class="course-date">Nov 21, 2018</div>
+                                    <?php
+                                        $dateValue = strtotime($course['created_at']);
+                                        echo '<div class="course-date">'.date('Y',$dateValue).'/'.date('m',$dateValue).'/'.date('d',$dateValue).'</div>';
+                                    ?>
                                 </div><!-- .course-date -->
                             </header><!-- .entry-header -->
 
