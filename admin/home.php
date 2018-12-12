@@ -12,13 +12,13 @@
                         <!--slider-->
                         <div class="slider-wrapper theme-default">
 
-                            <div id="slider" class="nivoSlider">
+                            <!-- <div id="slider" class="nivoSlider">
                                 <img src="src/images/1.jpg" data-thumb="src/images/toystory.jpg" alt="" />
                                 <img src="src/images/2.jpg" data-thumb="src/images/toystory.jpg" alt="" />
                                 <img src="src/images/3.jpg" data-thumb="src/images/wineries.jpg" alt="" t />
                                 <img src="src/images/4.jpg"  alt="" data-transition="slideInLeft" />
                         
-                            </div>
+                            </div> -->
 
                         </div>
                         <!-- end slider -->

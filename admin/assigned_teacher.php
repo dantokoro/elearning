@@ -13,30 +13,28 @@
 
                     <div class="span12">
                         <div class="hero-unit-3">
-                            <a href="add_teacher.php" class="btn btn-success"><i class="icon-plus-sign icon-large"></i>&nbsp;Add Teacher</a>
+                            <a href="add_assign.php" class="btn btn-success"><i class="icon-plus-sign icon-large"></i>&nbsp;Add</a>
                             <br>
                             <br>
                             <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="example">
                                 <div class="alert alert-info">
                                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                    <strong><i class="icon-user icon-large"></i>&nbsp;Teachers Table</strong>
+                                    <strong><i class="icon-user icon-large"></i>&nbsp;Assigned Teachers Table</strong>
                                 </div>
                                 <thead>
                                     <tr>
-                                        <th>Photo</th>
-                                        <th>Username</th>
-                                        <th>Password</th>
+                                        <th>Teacher ID</th>
                                         <th>Name</th>
-                                        <th>Phone</th>
-                                        <th>Certificate</th>                                
-                                        <th>Action</th>
+                                        <th>Course ID</th>
+                                        <th>Course</th>
+                                        <th>Assigned Date</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $table = '"Teacher"';
-                                    $query = pg_query("SELECT * FROM $table") or die(pg_errormessage());
-                                    while ($row = pg_fetch_array($query)) {
+                                    $query = 'SELECT "Teacher".teacher_id, "Teacher".name as teachername, "Course".course_id, "Course".name as coursename, assigned_date FROM "Teacher" NATURAL JOIN "AssignTeacher" JOIN "Course" ON "AssignTeacher".course_id = "Course".course_id';
+                                    $result = pg_query($query) or die(pg_errormessage());
+                                    while ($row = pg_fetch_array($result)) {
                                         $teacher_id = $row['teacher_id'];
                                         ?>
                                         <tr class="odd gradeX">
@@ -60,16 +58,12 @@
                                     </script>
                                     <!-- end script -->
 
-                                    <td width="40"><img class="img-rounded" src="<?php echo $row['picture']; ?>" height="50" width="30"></td> 
-                                    <td><?php echo $row['email']; ?></td> 
-                                    <td><?php echo $row['password']; ?></td> 
-                                    <td><?php echo $row['name'] . " "; ?></td> 
-                                    <td><?php echo $row['phone']; ?></td>
-                                    <td><?php echo $row['certificate']; ?></td>            
-                                    <td width="100">
-                                        <a rel="tooltip"  title="Delete Teacher" id="d<?php echo $teacher_id; ?>" href="#course_id<?php echo $teacher_id; ?>" role="button"  data-toggle="modal" class="btn btn-danger"><i class="icon-trash icon-large"></i>&nbsp;</a>
-                                        <a rel="tooltip"  title="Edit Teacher" id="e<?php echo $teacher_id; ?>" href="edit_teacher.php<?php echo '?id='.$teacher_id; ?>" class="btn btn-success"><i class="icon-pencil icon-large"></i>&nbsp;</a>
-                                    </td>
+                                    <td><?php echo $row['teacher_id']; ?></td> 
+                                    <td><?php echo $row['teachername']; ?></td> 
+                                    <td><?php echo $row['course_id'] . " "; ?></td> 
+                                    <td><?php echo $row['coursename']; ?></td>
+                                    <td><?php echo $row['assigned_date']; ?></td>            
+
                                     <!-- user delete modal -->
                                     <div id="course_id<?php echo $teacher_id; ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                         <div class="modal-header">

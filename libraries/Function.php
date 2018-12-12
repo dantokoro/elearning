@@ -24,23 +24,36 @@
         return floor($float * 2) / 2;
     }
 
-    function print_rating($rating_point) 
+    function upload_image($image) 
     {
-        $star = round_half_integer($rating_point);
-        echo $star."\t";
-        for($i = 0; $i < 5; $i++) {
-            if($star >= 1) {
-                echo '<span class="fa fa-star" style="color:yellow; font-size:17px"></span>';
-                $star -= 1;
-            }
-            else if($star >= 0.5) {
-                echo '<span class="fa fa-star-half-o" style="color:yellow; font-size:17px"></span>';
-                $star -= 0.5;
-            }
-            else {
-                echo '<span class="fa fa-star-o" style="color:yellow; font-size:17px"></span>';
-            }
-        }        
-        echo '<span class="course-ratings-count">(4 votes) </span>';
+        $filename = $image['tmp_name'];
+        $client_id = "3d396ef6747fb6b";
+        $handle = fopen($filename, "r");
+        $data = fread($handle, filesize($filename));
+        $pvars   = array(
+            'image' => base64_encode($data)
+          );
+        $timeout = 30;
+        
+        // khởi tạo tiến trình upload
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_URL, 'https://api.imgur.com/3/image.json');
+        curl_setopt($curl, CURLOPT_TIMEOUT, $timeout);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Authorization: Client-ID ' . $client_id));
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $pvars);
+        
+        // thực thi tiến trình upload ảnh
+        $out = curl_exec($curl);
+        curl_close($curl);
+
+        $pms = json_decode($out, true);
+        $url = $pms['data']['link'];
+        if($url != "") {
+            return $url;
+        }
+        else return false;
     }
 ?>
