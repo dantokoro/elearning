@@ -192,8 +192,15 @@ a:active {
 --------------------------------*/
 
 .nav-bar {
-    padding: 20px 0;
+    position: fixed;
+    padding: 20px 0px;
+    width: 100%;
     background: rgba(255, 255, 255, .1);
+}
+
+.nav-bar.black {
+    transform: translate(0px, -50px);
+    background: black;
 }
 
 
@@ -360,8 +367,8 @@ a:active {
 --------------------------------------------------------------*/
 
 .hero-content {
-    background: url("../user/images/hero-bg.jpg") no-repeat center;
-    background-size: cover;
+    background: url("http://neatoday.org/wp-content/uploads/2015/06/what_is_creative_teaching-e1433788418645.jpeg") no-repeat center;
+    background-size: 1400px 1000px;
 }
 
 .hero-content-overlay {
@@ -1195,7 +1202,7 @@ a.btn:hover {
 }
 
 .courses-page .page-header {
-    background: url("../user/images/courses-header.jpg") no-repeat center;
+    background: url("images/courses-header.jpg") no-repeat center;
 }
 
 .page-header-overlay {
@@ -2786,4 +2793,13 @@ p.footer-copyright {
 
 .footer-bar-nav ul li a:hover {
     color: #34d986;
+}
+
+
+/*  slider */
+
+.course_content {
+    position: relative;
+    left: 25%;
+    transform: translate(-50%, -10%);
 }

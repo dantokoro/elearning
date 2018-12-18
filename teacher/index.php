@@ -1,179 +1,293 @@
-<!DOCTYPE html>
-<?php
-    require('../libraries/Function.php');
-    require('../libraries/Database.php');
-
-    $conn = connect('localhost','elearning', 'postgres', 'kien1998');
-?>
-
-    <html lang="en">
-    <?php
-        include('layouts/header.php');
-    ?>
-
-        <body>
-            <div class="hero-content">
-                <header class="site-header">
-                    <div class="top-header-bar">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-12 col-lg-6 d-none d-md-flex flex-wrap justify-content-center justify-content-lg-start mb-3 mb-lg-0">
-                                    <div class="header-bar-email d-flex align-items-center">
-                                        <i class="fa fa-envelope"></i>
-                                        <a href="#"></a>
-                                    </div>
-                                    <!-- .header-bar-email -->
-
-                                    <div class="header-bar-text lg-flex align-items-center">
-                                        <p><i class="fa fa-phone"></i> </p>
-                                    </div>
-                                    <!-- .header-bar-text -->
-                                </div>
-                                <!-- .col -->
-
-                                <div class="col-12 col-lg-6 d-flex flex-wrap justify-content-center justify-content-lg-end align-items-center">
-                                    <div class="header-bar-menu">
-                                        <ul class="flex justify-content-center align-items-center py-2 pt-md-0">
-                                            <li><a href="login/login2.php">Register/Login</a></li>
-                                        </ul>
-                                    </div>
-                                    <!-- .header-bar-menu -->
-                                </div>
-                                <!-- .col -->
-                            </div>
-                            <!-- .row -->
-                        </div>
-                        <!-- .container-fluid -->
-                    </div>
-                    <!-- .top-header-bar -->
-
-                    <div class="nav-bar">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-9 col-lg-3">
-                                    <div class="site-branding">
-                                        <h1 class="site-title"><a href="index.php" rel="home">Dabaki<span>Academy</span></a></h1>
-                                    </div>
-                                    <!-- .site-branding -->
-                                </div>
-                                <!-- .col -->
-
-                                <div class="col-3 col-lg-9 flex justify-content-end align-content-center">
-                                    <nav class="site-navigation flex justify-content-end align-items-center">
-                                        <ul class="flex flex-column flex-lg-row justify-content-lg-end align-content-center">
-                                            <li class="current-menu-item"><a href="index.php">Home</a></li>
-                                            <li><a href="about.php">About</a></li>
-                                            <li><a href="courses.php">Courses</a></li>
-                                            <li><a href="contact.php">Contact</a></li>
-                                        </ul>
-
-                                        <div class="hamburger-menu d-lg-none">
-                                            <span></span>
-                                            <span></span>
-                                            <span></span>
-                                            <span></span>
-                                        </div>
-                                        <!-- .hamburger-menu -->
-
-                                        <div class="header-bar-cart">
-                                            <a href="#" class="flex justify-content-center align-items-center"><span aria-hidden="true" class="icon_bag_alt"></span></a>
-                                        </div>
-                                        <!-- .header-bar-search -->
-                                    </nav>
-                                    <!-- .site-navigation -->
-                                </div>
-                                <!-- .col -->
-                            </div>
-                            <!-- .row -->
-                        </div>
-                        <!-- .container -->
-                    </div>
-                    <!-- .nav-bar -->
-                </header>
-                <!-- .site-header -->
-
-                <div class="hero-content-overlay">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="hero-content-wrap flex flex-column justify-content-center align-items-start">
-                                    <header class="entry-header">
-                                        <h1 style="color: whitesmoke">Jump Into Course Creation</h1>
-                                    </header> <!-- .entry-header -->
-                                    <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-  Launch demo modal
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-                                </div>  
-                                <!-- .hero-content-wrap -->
-                            </div>
-                            <!-- .col -->
-                        </div>
-                        <!-- .row -->
-                    </div>
-                    <!-- .container -->
-                </div>
-                <!-- .hero-content-hero-content-overlay -->
+<?php require('header.php'); ?>
+<body>
+   <div class="hero-content">
+      <header class="site-header">
+         <div class="top-header-bar">
+            <div class="container-fluid">
+               <div class="row">
+                  <div class="col-12 col-lg-6 d-none d-md-flex flex-wrap justify-content-center justify-content-lg-start mb-3 mb-lg-0">
+                     <div class="header-bar-email d-flex align-items-center">
+                        <i class="fa fa-envelope"></i><a href="#"></a>
+                     </div>
+                     <!-- .header-bar-email -->
+                     <div class="header-bar-text lg-flex align-items-center">
+                        <p><i class="fa fa-phone"></i> </p>
+                     </div>
+                     <!-- .header-bar-text -->
+                  </div>
+                  <!-- .col -->
+                  <div class="col-12 col-lg-6 d-flex flex-wrap justify-content-center justify-content-lg-end align-items-center">
+                     <div class="header-bar-search">
+                        <form class="flex align-items-stretch">
+                           <input type="search" placeholder="What you want to see?">
+                           <button type="submit" value="" class="flex justify-content-center align-items-center"><i class="fa fa-search"></i></button>
+                        </form>
+                     </div>
+                     <!-- .header-bar-search -->
+                     <div class="header-bar-menu">
+                        <ul class="flex justify-content-center align-items-center py-2 pt-md-0">
+                           <li><a href="login/login2.php">Register/Login</a></li>
+                        </ul>
+                     </div>
+                     <!-- .header-bar-menu -->
+                  </div>
+                  <!-- .col -->
+               </div>
+               <!-- .row -->
             </div>
-            <!-- .hero-content -->
+            <!-- .container-fluid -->
+         </div>
+         <!-- .top-header-bar -->
+         <?php require('navbar.php') ?>
+      </header>
+      <!-- .site-header -->
+      <div class="hero-content-overlay">
+         <div class="container">
+            <div class="row">
+               <div class="col-12">
+                  <div class="hero-content-wrap flex flex-column justify-content-center align-items-start">
+                     <header class="entry-header">
+                        <h4>Get started by create your own courses</h4>
+                        <h1>best online<br/>Learning system</h1>
+                     </header>
+                     <!-- .entry-header -->
+                     <footer class="entry-footer read-more">
+                        <a href="#">Create</a>
+                     </footer>
+                     <!-- .entry-footer -->
+                  </div>
+                  <!-- .hero-content-wrap -->
+               </div>
+               <!-- .col -->
+            </div>
+            <!-- .row -->
+         </div>
+         <!-- .container -->
+      </div>
+      <!-- .hero-content-hero-content-overlay -->
+   </div>
+   <!-- .hero-content -->
+   <section class="featured-courses horizontal-column courses-wrap">
+      <div class="container">
+         <div class="row">
+            <div class="col-12">
+               <header class="heading flex justify-content-between align-items-center" style="padding: 20px;">
+                  <h2 class="entry-title">Your courses</h2>
+                  <a class="btn mt-4 mt-sm-0" href="courses.php">view all</a>
+               </header>
+               <!-- .heading -->
+            </div>
+            <!-- col -->
+         </div>
+         <!-- row -->
+         <div class="row">
+         <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+            </ol>
 
-            <section class="featured-courses vertical-column courses-wrap">
-                <div class="container">
-                    <div class="row mx-m-25">
-                        <div class="col-12 px-25">
-                            <header class="heading flex flex-wrap justify-content-between align-items-center">
-                                <h2 class="entry-title">YOUR COURSES</h2>
-                            </header>
-                            <!-- .heading -->
-                        </div>
-                        <!-- .col -->
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+            <div class="item active">
+                <?php include('temp.php'); ?>
+            </div>
 
-                        <!-- -->
+            <div class="item">
+                <?php include('temp.php'); ?>
+            </div>
+            
+            <div class="item">
+                <?php include('temp.php'); ?>
+            </div>
+            </div>
 
-                        <div class="col-12 px-25 flex justify-content-center">
-                            <a class="btn" href="courses.php">view all courses</a>
-                        </div>
-                        <!-- .col -->
-                    </div>
-                    <!-- .row -->
-                </div>
-                <!-- .container -->
-            </section>
-            <!-- .courses-wrap -->
+            <!-- Left and right controls -->
+            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+            <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <span class="sr-only">Next</span>
+            </a>
+        </div>
+        </div>
+         </div>
+         <!-- row -->
+      </div>
+      <!-- container -->
+   </section>
+   <!-- .courses-wrap -->
+   <section class="about-section">
+      <div class="container">
+         <div class="row">
+            <div class="col-12 col-lg-6 align-content-lg-stretch">
+               <header class="heading">
+                  <h2 class="entry-title">Your achievement</h2>
+                  <p>All of achievement you have made</p>
+               </header>
+               <!-- .heading -->
+               <div class="entry-content ezuca-stats">
+                  <div class="stats-wrap flex flex-wrap justify-content-lg-between">
+                     <div class="stats-count">
+                        <!-- Learning student -->
+                        50<span>M+</span>
+                        <p>STUDENTS LEARNING</p>
+                     </div>
+                     <!-- .stats-count -->
+                     <div class="stats-count">
+                        <!-- Number of courses -->
+                        30<span>K+</span>
+                        <p>ACTIVE COURSES</p>
+                     </div>
+                     <!-- .stats-count -->
+                     <div class="stats-count">
+                        <!-- Average rating -->
+                        340<span>M+</span>
+                        <p>INSTRUCTORS ONLINE</p>
+                     </div>
+                     <!-- .stats-count -->
+                     <!-- <div class="stats-count">
+                        20<span>+</span>
+                        <p>Country Reached</p>
+                        </div>.stats-count -->
+                  </div>
+                  <!-- .stats-wrap -->
+               </div>
+               <!-- .ezuca-stats -->
+            </div>
+            <!-- .col -->
+            <div class="col-12 col-lg-6 flex align-content-center mt-5 mt-lg-0">
+               <!-- chart -->
+            </div>
+         </div>
+         <!-- .row -->
+      </div>
+      <!-- .container -->
+   </section>
+   <!-- .about-section -->
+   <section class="home-gallery">
+      <div class="gallery-wrap flex flex-wrap">
+         <div class="gallery-grid gallery-grid1x1">
+            <a href="#"><img src="images/a.jpg" alt=""></a>
+         </div>
+         <!-- .gallery-grid -->
+         <div class="gallery-grid gallery-grid1x1">
+            <a href="#"><img src="images/b.jpg" alt=""></a>
+         </div>
+         <!-- .gallery-grid -->
+         <div class="gallery-grid gallery-grid2x2">
+            <a href="#"><img src="images/c.jpg" alt=""></a>
+         </div>
+         <!-- .gallery-grid -->
+         <div class="gallery-grid gallery-grid1x1">
+            <a href="#"><img src="images/d.jpg" alt=""></a>
+         </div>
+         <!-- .gallery-grid -->
+         <div class="gallery-grid gallery-grid1x1">
+            <a href="#"><img src="images/e.jpg" alt=""></a>
+         </div>
+         <!-- .gallery-grid -->
+         <div class="gallery-grid gallery-grid2x1">
+            <a href="#"><img src="images/g.jpg" alt=""></a>
+         </div>
+         <!-- .gallery-grid -->
+         <div class="gallery-grid gallery-grid2x1">
+            <a href="#"><img src="images/h.jpg" alt=""></a>
+         </div>
+         <!-- .gallery-grid -->
+         <div class="gallery-grid gallery-grid1x1">
+            <a href="#"><img src="images/i.jpg" alt=""></a>
+         </div>
+         <!-- .gallery-grid -->
+         <div class="gallery-grid gallery-grid2x2 ">
+            <a href="#"><img src="images/j.jpg" alt=""></a>
+         </div>
+         <!-- .gallery-grid -->
+         <div class="gallery-grid gallery-grid1x1">
+            <a href="#"><img src="images/k.jpg" alt=""></a>
+         </div>
+         <!-- .gallery-grid -->
+         <div class="gallery-grid gallery-grid1x1">
+            <a href="#"><img src="images/l.jpg" alt=""></a>
+         </div>
+         <!-- .gallery-grid -->
+         <div class="gallery-grid gallery-grid2x1">
+            <a href="#"><img src="images/m.jpg" alt=""></a>
+         </div>
+         <!-- .gallery-grid -->
+         <div class="gallery-grid gallery-grid3x1">
+            <a href="#"><img src="images/n.jpg" alt=""></a>
+         </div>
+         <!-- .gallery-grid -->
+         <div class="gallery-grid gallery-grid1x1">
+            <a href="#"><img src="images/o.jpg" alt=""></a>
+         </div>
+         <!-- .gallery-grid -->
+      </div>
+      <!-- .gallery-wrap -->
+   </section>
+   <!-- .home-gallery -->
+   <div class="clients-logo">
+      <div class="container">
+         <div class="row">
+            <div class="col-12 flex flex-wrap justify-content-center justify-content-lg-between align-items-center">
+               <div class="logo-wrap">
+                  <img src="images/logo-1.png" alt="">
+               </div>
+               <!-- .logo-wrap -->
+               <div class="logo-wrap">
+                  <img src="images/logo-2.png" alt="">
+               </div>
+               <!-- .logo-wrap -->
+               <div class="logo-wrap">
+                  <img src="images/logo-3.png" alt="">
+               </div>
+               <!-- .logo-wrap -->
+               <div class="logo-wrap">
+                  <img src="images/logo-4.png" alt="">
+               </div>
+               <!-- .logo-wrap -->
+               <div class="logo-wrap">
+                  <img src="images/logo-5.png" alt="">
+               </div>
+               <!-- .logo-wrap -->
+            </div>
+            <!-- .col -->
+         </div>
+         <!-- .row -->
+      </div>
+      <!-- .container -->
+   </div>
+   <!-- .clients-logo -->
+   <?php require('footer.php'); ?>
+   <script type='text/javascript' src='src/js/jquery.js'></script>
+   <script type='text/javascript' src='src/js/swiper.min.js'></script>
+   <script type='text/javascript' src='src/js/masonry.pkgd.min.js'></script>
+   <script type='text/javascript' src='src/js/jquery.collapsible.min.js'></script>
+   <script type='text/javascript' src='src/js/custom.js'></script>
+   <script type="text/javascript">
+      // Scrolling Effect
+      
+      $(window).on("scroll", function() {
+          if ($(window).scrollTop()) {
+              $('.nav-bar').addClass('black');
+          } else {
+              $('.nav-bar').removeClass('black');
+          }
+      })
+   </script>
 
-            <?php
-        include('layouts/footer.php');
-    ?>
-
-
-
-                <script type='text/javascript' src='js/jquery.js'></script>
-                <script type='text/javascript' src='js/swiper.min.js'></script>
-                <script type='text/javascript' src='js/masonry.pkgd.min.js'></script>
-                <script type='text/javascript' src='js/jquery.collapsible.min.js'></script>
-                <script type='text/javascript' src='js/custom.js'></script>
-
-        </body>
-
-    </html>
+   <script type="text/javascript">
+        $(document).ready(function() {
+            $('.carousel').carousel( {
+                interval: 3000;
+            })
+        });
+        $('.carousel').carousel('cycle');
+   </script>
+</body>
+</html>

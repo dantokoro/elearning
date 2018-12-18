@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
 
-        <title>CHMSC Elearning System</title>
+        <title>Dabaki Elearning System</title>
         <link href="src/img/chmsc.png" rel="icon" type="image">
         <link href="src/css/bootstrap.css" rel="stylesheet" type="text/css" media="screen">
         <link href="src/css/bootstrap-responsive.css" rel="stylesheet" type="text/css" media="screen">

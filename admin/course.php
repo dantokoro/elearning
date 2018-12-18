@@ -25,7 +25,7 @@
                                     <tr>
                                         <th>Course ID</th>
                                         <th>Course Name</th>
-                                        <th>Fee</th>
+                                        <th>price</th>
                                         <th>Created_at</th>
                                     </tr>
                                 </thead>
@@ -61,7 +61,7 @@
                                     <tr class="odd gradeX">
                                         <td><?php echo $row['course_id']; ?></td> 
                                         <td><?php echo $row['name']; ?></td> 
-                                        <td><?php echo $row['fee']; ?></td> 
+                                        <td><?php echo $row['price']; ?></td> 
                                         <td><?php echo $row['created_at']; ?></td> 
                                         <td width="100">
                                             <a rel="tooltip"  title="Delete Student" id="d<?php echo $course_id; ?>" href="#course_id<?php echo $course_id; ?>" role="button"  data-toggle="modal" class="btn btn-danger"><i class="icon-trash icon-large"></i></a>

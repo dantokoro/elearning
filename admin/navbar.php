@@ -35,8 +35,8 @@ ob_start();
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="Category.php">Category</a></li>
-                            <li><a href="Course.php">Course</a></li>
+                            <li><a href="category.php">Category</a></li>
+                            <li><a href="course.php">Course</a></li>
                             <li><a href="assigned_teacher.php">Assigned Teacher</a></li>
                             <!-- <li><a href="department.php">Department</a></li> -->
                         </ul>
