@@ -28,9 +28,9 @@
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" for="fee">Fee:</label>
+                                    <label class="control-label" for="price">price:</label>
                                     <div class="controls">
-                                        <input type="text" name="fee" id="fee" value="<?php echo $rows['fee'] ?>" required>
+                                        <input type="text" name="price" id="price" value="<?php echo $rows['price'] ?>" required>
                                     </div>
                                     <div class="control-group">
                                     <label class="control-label" for="input01">Cover:</label>
@@ -56,7 +56,7 @@
                             <?php
                             if (isset($_POST['save'])) {
                                 $name = $_POST['name'];
-                                $fee = $_POST['fee'];
+                                $price = $_POST['price'];
                                 if(empty($_FILES['cover'])) {
                                     $cover = $row['cover'];
                                 } else {
@@ -69,7 +69,7 @@
                                     $avatar = upload_image($_FILES['avatar']);
                                 }
 
-                                $query = 'UPDATE "Course" SET name=' . "'$name'" . ", fee=" . $fee . ", cover=" . "'$cover'" . ", avatar=" . "'$avatar'" . "WHERE course_id=" . $get_id; 
+                                $query = 'UPDATE "Course" SET name=' . "'$name'" . ", price=" . $price . ", cover=" . "'$cover'" . ", avatar=" . "'$avatar'" . "WHERE course_id=" . $get_id; 
 			                    pg_query($conn, $query)or die(pg_errormessage());
 
                                 header('location:course.php') or die(pg_errormessage());

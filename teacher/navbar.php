@@ -13,7 +13,7 @@
                         <li class="current-menu-item"><a href="index.php">Home</a></li>
                         <li><a href="about.php">About</a></li>
                         <li><a href="courses.php">Courses</a></li>
-                        <li><a href="contact.php">Contact</a></li>
+                        <li><a href="../user/contact.php">Contact</a></li>
                     </ul>
                     <div class="hamburger-menu d-lg-none">
                         <span></span>

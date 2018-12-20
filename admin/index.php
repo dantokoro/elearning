@@ -122,12 +122,17 @@ unset($_SESSION['id']);
 
                                     $username = $_POST['username'];
                                     $password = $_POST['password'];
-                                    $username = trim($username, '"'); $username = "'" . $username . "'";
-                                    $password = trim($password, '"'); $password = "'" . $password . "'";
+                                    pg_escape_string($password);
 
+                                    // $username = trim($username, '"'); $username = "'" . $username . "'";
+                                    // $password = trim($password, '"'); $password = "'" . $password . "'";
+
+                                    //prepare statement
                                     $table = '"Admin"';
-                                    $query_str = "SELECT * FROM $table WHERE email=$username AND password=$password";
-                                    $query = pg_query($conn ,$query_str) or die(pg_errormessage());
+                                    $query_str = "SELECT * FROM $table WHERE email=$1 AND password=$2";
+                                    $result = pg_prepare($conn, "myquery", $query_str);
+                                    $query = pg_execute($conn, "myquery", array($username, $password));
+
                                     $count = pg_num_rows($query);
                                     $row = pg_fetch_array($query);
                                     
@@ -139,7 +144,8 @@ unset($_SESSION['id']);
                                         session_write_close();
                                         exit();
                                     } else {
-                                        session_write_close();
+                                        session_write_close(); }
+                                    
                                         ?>
 
                                      
@@ -148,7 +154,6 @@ unset($_SESSION['id']);
                                         <?php
                                       
                                     }
-                                }
                                 ?>
                             </div>
                 

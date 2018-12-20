@@ -1,14 +1,9 @@
 <?php 
-   require('header.php');
-   ob_start();
-   session_start();
-   if(isset($_SESSION['username'])) {
-      $username = $_SESSION['username'];
-   }
-   if(isset($_SESSION['id'])) {
-      $user_id = $_SESSION['id'];
-   }
+    require('header.php');
+    include '../admin/connect.php';
+    include 'autoload/autoload.php';
 ?>
+
 <body>
    <div class="hero-content">
       <header class="site-header">
@@ -36,13 +31,7 @@
                      <!-- .header-bar-search -->
                      <div class="header-bar-menu">
                         <ul class="flex justify-content-center align-items-center py-2 pt-md-0">
-                           <?php
-                              if(empty($username)) {
-                                 echo '<li><a href="login.php">Register/Login</a></li>';
-                              } else {
-                                 echo '<li><a href="profile.php">Hi '.$username.'</a></li>';
-                              }
-                           ?>
+                           <li><a href="login/login2.php">Register/Login</a></li>
                         </ul>
                      </div>
                      <!-- .header-bar-menu -->
@@ -85,46 +74,16 @@
    <!-- .hero-content -->
    <section class="featured-courses horizontal-column courses-wrap">
       <div class="container">
-         <div class="row">
+        <div class="row">
             <div class="col-12">
-               <header class="heading flex justify-content-between align-items-center" style="padding: 20px;">
-                  <h2 class="entry-title">Your courses</h2>
-                  <a class="btn mt-4 mt-sm-0" href="courses.php">view all</a>
-               </header>
-               <!-- .heading -->
-            </div>
-            <!-- col -->
-         </div>
-         <!-- row -->
-         <div class="row">
-         <div id="myCarousel" class="carousel slide" data-ride="carousel">
-            <!-- Indicators -->
-            <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-            </ol>
-
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner">
-               <div class="item active">  
-                  <!-- carousel item -->
-               </div>
-            
-            </div>
-
-            <!-- Left and right controls -->
-            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-            <span class="sr-only">Previous</span>
-            </a>
-            <a class="right carousel-control" href="#myCarousel" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right"></span>
-            <span class="sr-only">Next</span>
-            </a>
+                <header class="heading flex justify-content-between align-items-center">
+                    <h2 class="entry-title">All of your courses</h2>
+                </header><!-- .heading -->
+            </div><!-- .col -->
+            <?php 
+                all_course_printer($conn, 7);
+            ?>
         </div>
-        </div>
-         </div>
          <!-- row -->
       </div>
       <!-- container -->
@@ -178,68 +137,7 @@
       <!-- .container -->
    </section>
    <!-- .about-section -->
-   <section class="home-gallery">
-      <div class="gallery-wrap flex flex-wrap">
-         <div class="gallery-grid gallery-grid1x1">
-            <a href="#"><img src="images/a.jpg" alt=""></a>
-         </div>
-         <!-- .gallery-grid -->
-         <div class="gallery-grid gallery-grid1x1">
-            <a href="#"><img src="images/b.jpg" alt=""></a>
-         </div>
-         <!-- .gallery-grid -->
-         <div class="gallery-grid gallery-grid2x2">
-            <a href="#"><img src="images/c.jpg" alt=""></a>
-         </div>
-         <!-- .gallery-grid -->
-         <div class="gallery-grid gallery-grid1x1">
-            <a href="#"><img src="images/d.jpg" alt=""></a>
-         </div>
-         <!-- .gallery-grid -->
-         <div class="gallery-grid gallery-grid1x1">
-            <a href="#"><img src="images/e.jpg" alt=""></a>
-         </div>
-         <!-- .gallery-grid -->
-         <div class="gallery-grid gallery-grid2x1">
-            <a href="#"><img src="images/g.jpg" alt=""></a>
-         </div>
-         <!-- .gallery-grid -->
-         <div class="gallery-grid gallery-grid2x1">
-            <a href="#"><img src="images/h.jpg" alt=""></a>
-         </div>
-         <!-- .gallery-grid -->
-         <div class="gallery-grid gallery-grid1x1">
-            <a href="#"><img src="images/i.jpg" alt=""></a>
-         </div>
-         <!-- .gallery-grid -->
-         <div class="gallery-grid gallery-grid2x2 ">
-            <a href="#"><img src="images/j.jpg" alt=""></a>
-         </div>
-         <!-- .gallery-grid -->
-         <div class="gallery-grid gallery-grid1x1">
-            <a href="#"><img src="images/k.jpg" alt=""></a>
-         </div>
-         <!-- .gallery-grid -->
-         <div class="gallery-grid gallery-grid1x1">
-            <a href="#"><img src="images/l.jpg" alt=""></a>
-         </div>
-         <!-- .gallery-grid -->
-         <div class="gallery-grid gallery-grid2x1">
-            <a href="#"><img src="images/m.jpg" alt=""></a>
-         </div>
-         <!-- .gallery-grid -->
-         <div class="gallery-grid gallery-grid3x1">
-            <a href="#"><img src="images/n.jpg" alt=""></a>
-         </div>
-         <!-- .gallery-grid -->
-         <div class="gallery-grid gallery-grid1x1">
-            <a href="#"><img src="images/o.jpg" alt=""></a>
-         </div>
-         <!-- .gallery-grid -->
-      </div>
-      <!-- .gallery-wrap -->
-   </section>
-   <!-- .home-gallery -->
+  
    <div class="clients-logo">
       <div class="container">
          <div class="row">
