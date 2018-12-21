@@ -622,18 +622,10 @@ a:active {
 
 .course-date {
     position: relative;
-    padding-left: 10px;
-    margin-left: 5px;
+    padding-left: 0px;
+    margin-left: 0px;
+    font-size: 20px;
     color: #757686;
-}
-
-.course-date::before {
-    content: '/';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 10px;
-    text-align: center;
 }
 
 .course-content .entry-footer {

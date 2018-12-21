@@ -67,7 +67,7 @@
                <div class="col-12">
                   <div class="hero-content-wrap flex flex-column justify-content-center align-items-start">
                      <header class="entry-header">
-                        <h4>Get started by create your own courses</h4>
+                        <h4>Get started by create your own courses on</h4>
                         <h1>best online<br/>Learning system</h1>
                      </header>
                      <!-- .entry-header -->
@@ -93,6 +93,7 @@
             <div class="col-12">
                 <header class="heading flex justify-content-between align-items-center">
                     <h2 class="entry-title" style="padding = 20px;">All of your courses</h2>
+                    <hr>
                 </header><!-- .heading -->
             </div><!-- .col -->
             <div class="col-lg-6" style="position: relative; left: 25%; transform: translate(-50%, -10%); top: 20px;">
@@ -109,36 +110,60 @@
 
 
    <section class="about-section">
-      <?php
-         $query = "SELECT count(*) FROM "
-      ?>
-
       <div class="container">
          <div class="row">
             <div class="col-12 col-lg-6 align-content-lg-stretch">
                <header class="heading">
                   <h2 class="entry-title">Your achievement</h2>
                   <p>All of achievement you have made</p>
+                  <hr>
                </header>
                <!-- .heading -->
                <div class="entry-content ezuca-stats">
                   <div class="stats-wrap flex flex-wrap justify-content-lg-between">
                      <div class="stats-count">
                         <!-- Learning student -->
-                        50<span>M+</span>
-                        <p>STUDENTS LEARNING</p>
+                        <?php
+                           $table = array('"Enrolled"', '"AssignTeacher"');
+                           $query = "SELECT count(*) FROM {$table[0]} WHERE course_id IN ( SELECT course_id FROM {$table[1]} WHERE teacher_id = $1)"; 
+                           pg_prepare($conn, "archieve", $query);
+                           $result = pg_execute($conn, "archieve", array($user_id));
+                           $teacher_info = pg_fetch_array($result);
+                        
+                           echo $teacher_info['count'].'<span>+</span>' ?>
+                        <p>Student Learning</p>
                      </div>
                      <!-- .stats-count -->
                      <div class="stats-count">
                         <!-- Number of courses -->
-                        30<span>K+</span>
-                        <p>ACTIVE COURSES</p>
+                        <?php 
+                           $table = '"AssignTeacher"';
+                           $query = "SELECT count(*) FROM {$table} WHERE teacher_id = $1";
+                           pg_prepare($conn, "courses", $query);
+                           $result = pg_execute($conn, "courses", array($user_id));
+                           $active_courses = pg_fetch_array($result);
+
+                           echo $active_courses['count'].'<span>+</span>';
+                        ?>
+                        <p>Active Courses</p>
                      </div>
                      <!-- .stats-count -->
                      <div class="stats-count">
                         <!-- Average rating -->
-                        340<span>M+</span>
-                        <p>INSTRUCTORS ONLINE</p>
+                        <?php 
+                           $table = array('"Vote"', '"AssignTeacher"');
+                           $query = "SELECT AVG(rate) FROM {$table[0]} WHERE course_id IN ( SELECT course_id FROM {$table[1]} WHERE teacher_id = $1)";
+                           pg_prepare($conn, "rating", $query);
+                           $result = pg_execute($conn, "rating", array($user_id));
+                           $rating = pg_fetch_array($result);
+
+                           if(isset($rating['avg'])) {
+                              echo $rating['avg'].'<span></span>';
+                              echo '<p>Average rating</p>';
+                           } else {
+                              echo '0<p>Average rating</p>';
+                           }
+                        ?>
                      </div>
                      <!-- .stats-count -->
                      <!-- <div class="stats-count">

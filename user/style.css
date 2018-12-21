@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
-
 body {
     color: #383749;
     font-size: 16px;
@@ -11,9 +10,11 @@ img {
     vertical-align: baseline;
 }
 
+
 /*--------------------------------------------------------------
 # Links
 --------------------------------------------------------------*/
+
 a {
     color: #383749;
 }
@@ -22,7 +23,9 @@ a:visited {
     color: #757686;
 }
 
-a:hover, a:focus, a:active {
+a:hover,
+a:focus,
+a:active {
     color: #383749;
 }
 
@@ -30,21 +33,26 @@ a:focus {
     outline: thin dotted;
 }
 
-a:hover, a:active {
+a:hover,
+a:active {
     outline: 0;
     list-style: none;
 }
 
+
 /*--------------------------------------------------------------
 # Helper Utilities
 --------------------------------------------------------------*/
+
 .flex {
     display: flex !important;
 }
 
+
 /*--------------------------------------------------------------
 # Site Header
 --------------------------------------------------------------*/
+
 .site-header {
     position: absolute;
     top: 0;
@@ -55,7 +63,7 @@ a:hover, a:active {
 
 @media screen and (min-width: 768px) {
     .site-header {
-        background: rgba(255,255,255,.1);
+        background: rgba(255, 255, 255, .1);
     }
 }
 
@@ -63,9 +71,11 @@ a:hover, a:active {
     background: #fff;
 }
 
+
 /*
 # Header Bar Text
 --------------------------------*/
+
 .header-bar-text,
 .header-bar-email {
     padding: 11px 26px;
@@ -82,9 +92,11 @@ a:hover, a:active {
     margin: 0;
 }
 
+
 /*
 # Header Bar Email
 --------------------------------*/
+
 .header-bar-email {
     padding-left: 16px;
     border-right: 1px solid #ebebeb;
@@ -95,9 +107,11 @@ a:hover, a:active {
     text-decoration: none;
 }
 
+
 /*
 # Header Bar search
 --------------------------------*/
+
 .header-bar-search input[type="search"] {
     width: 280px;
     padding: 12px 26px;
@@ -136,15 +150,16 @@ a:hover, a:active {
     .header-bar-menu {
         width: 100%;
     }
-
     .header-bar-search input[type="search"] {
         width: calc(100% - 50px);
     }
 }
 
+
 /*
 # Header Bar Menu
 --------------------------------*/
+
 .header-bar-menu ul {
     padding: 0 16px 0 32px;
     margin: 0;
@@ -171,17 +186,21 @@ a:hover, a:active {
     display: none;
 }
 
+
 /*
 # Nav Bar
 --------------------------------*/
+
 .nav-bar {
     padding: 20px 0;
-    background: rgba(255,255,255,.1);
+    background: rgba(255, 255, 255, .1);
 }
+
 
 /*
 # Site Branding
 --------------------------------*/
+
 .site-title {
     padding: 6px 0;
     margin: 0;
@@ -200,15 +219,17 @@ a:hover, a:active {
     color: #19c880;
 }
 
-@media screen and (min-width: 576px){
+@media screen and (min-width: 576px) {
     /*.site-title {*/
-        /*font-size: 112px;*/
+    /*font-size: 112px;*/
     /*}*/
 }
+
 
 /*
   Hamburger Menu
 ----------------------------------------*/
+
 .hamburger-menu {
     position: relative;
     width: 24px;
@@ -263,9 +284,11 @@ a:hover, a:active {
     left: 50%;
 }
 
+
 /*
 # Main Menu
 --------------------------------*/
+
 .site-navigation ul {
     margin: 0;
     list-style: none;
@@ -278,7 +301,7 @@ a:hover, a:active {
     height: 100%;
     overflow-x: scroll;
     padding: 30px 15px;
-    background: rgba(0,0,0,.9);
+    background: rgba(0, 0, 0, .9);
     transition: all 0.35s;
 }
 
@@ -312,9 +335,11 @@ a:hover, a:active {
     color: #19c880;
 }
 
+
 /*
 # Menu SHopping Cart
 --------------------------------*/
+
 .header-bar-cart {
     margin-left: 40px;
 }
@@ -329,16 +354,18 @@ a:hover, a:active {
     text-decoration: none;
 }
 
+
 /*--------------------------------------------------------------
 # Hero Section
 --------------------------------------------------------------*/
+
 .hero-content {
     background: url("images/hero-bg.jpg") no-repeat center;
     background-size: cover;
 }
 
 .hero-content-overlay {
-    background: rgba(21,20,33,.5);
+    background: rgba(21, 20, 33, .5);
 }
 
 .hero-content-wrap {
@@ -362,7 +389,7 @@ a:hover, a:active {
     color: #fff;
 }
 
-@media screen and (max-width: 576px){
+@media screen and (max-width: 576px) {
     .hero-content-wrap h1 {
         font-size: 32px;
     }
@@ -393,12 +420,16 @@ a:hover, a:active {
     background: #19c880;
 }
 
+
 /*--------------------------------------------------------------
 # Homepage
 --------------------------------------------------------------*/
+
+
 /*
 # Icon Box
 --------------------------------*/
+
 .icon-boxes {
     border-bottom: 1px solid #ebebeb;
 }
@@ -409,7 +440,7 @@ a:hover, a:active {
     border-right: 1px solid #ebebeb;
 }
 
-@media screen and (max-width: 1440px){
+@media screen and (max-width: 1440px) {
     .icon-box {
         padding: 40px;
     }
@@ -419,11 +450,9 @@ a:hover, a:active {
     .icon-box {
         width: 50%;
     }
-
     .icon-box:nth-of-type(2) {
         border-right: 0;
     }
-
     .icon-box:nth-of-type(1),
     .icon-box:nth-of-type(2) {
         border-bottom: 1px solid #ebebeb;
@@ -483,9 +512,11 @@ a:hover, a:active {
     left: 100%;
 }
 
+
 /*
 # Courses
 --------------------------------*/
+
 .courses-wrap .heading .entry-title {
     margin: 0;
     font-size: 42px;
@@ -536,7 +567,7 @@ a:hover, a:active {
 }
 
 .course-content:hover {
-    box-shadow: 0 24px 38px rgba(81,107,117,.21);
+    box-shadow: 0 24px 38px rgba(81, 107, 117, .21);
 }
 
 .course-thumbnail {
@@ -658,9 +689,11 @@ a.btn:hover {
     background: #34d986;
 }
 
+
 /*
 # Featured Courses: Horizontal Column
 --------------------------------*/
+
 .featured-courses.horizontal-column,
 .featured-courses.vertical-column {
     padding: 100px 0;
@@ -687,13 +720,10 @@ a.btn:hover {
     margin-bottom: 8px;
 }
 
-
-
-@media screen and (max-width: 576px){
+@media screen and (max-width: 576px) {
     .featured-courses.horizontal-column .course-thumbnail {
         width: 100%;
     }
-
     .featured-courses.horizontal-column .course-content-wrap {
         width: 100%;
         padding: 30px;
@@ -702,9 +732,11 @@ a.btn:hover {
     }
 }
 
+
 /*
 # Featured Courses: Vertical Column
 --------------------------------*/
+
 .featured-courses.vertical-column {
     background: #f7f7f7;
 }
@@ -713,9 +745,11 @@ a.btn:hover {
     margin-top: 60px;
 }
 
+
 /*
 # About Section
 --------------------------------*/
+
 .about-section {
     padding: 100px 0;
     background: #f7f7f7;
@@ -731,7 +765,7 @@ a.btn:hover {
     font-weight: 400;
 }
 
-.about-section .heading  p {
+.about-section .heading p {
     margin-top: 15px;
     font-size: 16px;
     line-height: 1.8;
@@ -766,9 +800,11 @@ a.btn:hover {
     text-transform: uppercase;
 }
 
+
 /*
 # About Section: Video
 --------------------------------*/
+
 .ezuca-video {
     width: 100%;
 }
@@ -793,20 +829,20 @@ a.btn:hover {
     .about-section .heading {
         padding-right: 0;
     }
-
     .ezuca-stats {
         padding-right: 0;
     }
-
     .ezuca-video .video-play-btn {
         left: 50%;
         margin-left: -40px;
     }
 }
 
+
 /*
 # About Section: Testimonial
 --------------------------------*/
+
 .testimonial-section {
     padding: 100px 0;
 }
@@ -833,7 +869,6 @@ a.btn:hover {
 .testimonial-slider .swiper-slide:nth-of-type(4) .user-avatar {
     margin-left: calc(50% + 70px);
 }
-
 
 .testimonial-slider .swiper-slide-next {
     opacity: 1 !important;
@@ -900,9 +935,11 @@ a.btn:hover {
     border: transparent;
 }
 
+
 /*
 # Latest News & Events
 --------------------------------*/
+
 .latest-news-events {
     padding: 100px 0;
 }
@@ -1056,21 +1093,21 @@ a.btn:hover {
     margin: 0;
 }
 
-@media screen and (max-width: 576px){
+@media screen and (max-width: 576px) {
     .event-content .event-thumbnail {
         width: 100%;
         margin-bottom: 24px;
     }
-
     .event-content .event-content-wrap {
         width: 100%;
     }
-
 }
+
 
 /*
 # Gallery
 --------------------------------*/
+
 .home-gallery {
     overflow: hidden;
 }
@@ -1109,12 +1146,10 @@ a.btn:hover {
     .gallery-grid1x1 {
         width: calc(100% / 4 - 10px);
     }
-
     .gallery-grid2x1,
     .gallery-grid2x2 {
         width: calc(100% / 2 - 10px);
     }
-
     .gallery-grid2x2 {
         width: calc(100% / 2 - 10px);
     }
@@ -1124,22 +1159,22 @@ a.btn:hover {
     .gallery-grid1x1 {
         width: calc(100% / 2 - 10px);
     }
-
     .gallery-grid2x1,
     .gallery-grid2x2 {
         width: calc(100% / 1- 10px);
         margin-bottom: 6px;
     }
-
     .gallery-grid2x2 {
         width: calc(100% / 1 - 10px);
         margin-bottom: 7px;
     }
 }
 
+
 /*
 # Clients Logos
 --------------------------------*/
+
 .clients-logo {
     margin-top: 100px;
     padding: 16px 0;
@@ -1150,9 +1185,11 @@ a.btn:hover {
     margin: 16px;
 }
 
+
 /*--------------------------------------------------------------
 # Courses Page
 --------------------------------------------------------------*/
+
 .page-header {
     background-size: cover !important;
 }
@@ -1162,7 +1199,7 @@ a.btn:hover {
 }
 
 .page-header-overlay {
-    background: rgba(21,20,33,.5);
+    background: rgba(21, 20, 33, .5);
     height: 390px;
     padding-top: 236px;
 }
@@ -1174,9 +1211,11 @@ a.btn:hover {
     text-align: center;
 }
 
+
 /*--------------------------------------------------------------
 # Breadcrumb
 --------------------------------------------------------------*/
+
 .breadcrumbs {
     margin: 30px 0;
 }
@@ -1211,9 +1250,11 @@ a.btn:hover {
     text-decoration: none;
 }
 
+
 /*--------------------------------------------------------------
 # Pagination
 --------------------------------------------------------------*/
+
 .pagination {
     margin-top: 50px;
 }
@@ -1263,9 +1304,11 @@ a.btn:hover {
     border: 1px solid #ebebeb;
 }
 
+
 /*--------------------------------------------------------------
 # Sidebar
 --------------------------------------------------------------*/
+
 .sidebar {
     padding: 25px;
     margin-top: 50px;
@@ -1273,15 +1316,17 @@ a.btn:hover {
     border: 1px solid #ebebeb;
 }
 
-@media screen and (max-width: 992px){
+@media screen and (max-width: 992px) {
     .sidebar {
         margin-left: 0;
     }
 }
 
+
 /*
 # Search
 --------------------------------*/
+
 .search-widget input[type="search"] {
     width: calc(100% - 48px);
     height: 48px;
@@ -1307,9 +1352,11 @@ a.btn:hover {
     outline: none;
 }
 
+
 /*
 # Categories
 --------------------------------*/
+
 .cat-links {
     margin-top: 50px;
 }
@@ -1338,7 +1385,8 @@ a.btn:hover {
     height: 100%;
     font-size: 14px;
     font-family: 'FontAwesome';
-    color: #c0c1cd;;
+    color: #c0c1cd;
+    ;
 }
 
 .cat-links ul li:hover::before {
@@ -1349,9 +1397,11 @@ a.btn:hover {
     text-decoration: none;
 }
 
+
 /*
 # Latest Courses
 --------------------------------*/
+
 .latest-courses {
     margin-top: 50px;
 }
@@ -1396,9 +1446,11 @@ a.btn:hover {
     color: #f3a90b;
 }
 
+
 /*
 # Ads
 --------------------------------*/
+
 .ads {
     margin-top: 50px;
 }
@@ -1407,9 +1459,11 @@ a.btn:hover {
     max-width: 100%;
 }
 
+
 /*
 # Latest Courses
 --------------------------------*/
+
 .popular-tags {
     margin-top: 50px;
 }
@@ -1441,9 +1495,11 @@ a.btn:hover {
     color: #383749;
 }
 
+
 /*--------------------------------------------------------------
 # Single Courses Page
 --------------------------------------------------------------*/
+
 .single-courses-page .page-header {
     background: url("images/single-courses-bg.jpg") no-repeat center;
 }
@@ -1459,7 +1515,7 @@ a.btn:hover {
 .single-courses-page .featured-image {
     position: relative;
     margin-top: -80px;
-    box-shadow: 0 24px 38px rgba(81,107,117,.21);
+    box-shadow: 0 24px 38px rgba(81, 107, 117, .21);
 }
 
 .single-courses-page .featured-image img {
@@ -1482,15 +1538,17 @@ a.btn:hover {
     text-align: center;
 }
 
-@media screen and (max-width: 992px){
+@media screen and (max-width: 992px) {
     .single-courses-page .featured-image {
         margin-top: 80px;
     }
 }
 
+
 /*
 # Course Info
 --------------------------------*/
+
 .course-info {
     margin-top: 40px;
 }
@@ -1764,21 +1822,18 @@ ul.black-doted {
     text-decoration: underline;
 }
 
-@media screen and (max-width: 992px){
+@media screen and (max-width: 992px) {
     .single-course-accordion-cont .lecture-group-title {
         width: calc(100% - 24px);
         margin-bottom: 12px;
     }
-
     .single-course-accordion-cont h2,
     .single-course-accordion-cont .lecture-title {
         width: 100%;
     }
-
     .single-course-accordion-cont ul li {
         margin-top: 24px;
     }
-
     .single-course-accordion-cont .total-lectures-time,
     .single-course-accordion-cont .lectures-time,
     .single-course-accordion-cont .number-of-lectures,
@@ -1786,16 +1841,17 @@ ul.black-doted {
         width: auto;
         text-align: left;
     }
-
     .instructors-details {
         margin-top: 50px;
         width: 100%;
     }
 }
 
+
 /*--------------------------------------------------------------
 # Ratings
 --------------------------------------------------------------*/
+
 .ratings {
     font-size: 13px;
     color: #fff;
@@ -1814,9 +1870,11 @@ ul.black-doted {
     color: #fff;
 }
 
+
 /*--------------------------------------------------------------
 # Post Share
 --------------------------------------------------------------*/
+
 .post-share {
     margin-top: 130px;
 }
@@ -1849,7 +1907,8 @@ ul.black-doted {
     border-radius: 50%;
     color: #fff;
 }
- .post-share .fa-facebook {
+
+.post-share .fa-facebook {
     background: #4b6cd0;
 }
 
@@ -1869,23 +1928,23 @@ ul.black-doted {
     background: #f0c605;
 }
 
-@media screen and (max-width: 992px){
+@media screen and (max-width: 992px) {
     .post-share {
         margin-top: 50px;
     }
-
     .post-share h3 {
         text-align: left;
     }
-
     .post-share ul li {
         margin: 0 5px;
     }
 }
 
+
 /*--------------------------------------------------------------
 # About Page
 --------------------------------------------------------------*/
+
 .about-page .page-header {
     background: url(images/courses-header.jpg) no-repeat center;
 }
@@ -1948,7 +2007,7 @@ ul.black-doted {
 }
 
 .team-member:hover {
-    box-shadow: 0 0 38px rgba(81,107,117,.21);
+    box-shadow: 0 0 38px rgba(81, 107, 117, .21);
 }
 
 .team-member img {
@@ -1976,7 +2035,7 @@ ul.black-doted {
 }
 
 .team-member ul li {
-    margin: 0 10px ;
+    margin: 0 10px;
 }
 
 .team-member ul li a {
@@ -2006,9 +2065,11 @@ ul.black-doted {
     color: #fff;
 }
 
+
 /*--------------------------------------------------------------
 # Blog Page
 --------------------------------------------------------------*/
+
 .blog-page .page-header {
     background: url("images/courses-header.jpg") no-repeat center;
 }
@@ -2095,9 +2156,11 @@ ul.black-doted {
     color: #757686;
 }
 
+
 /*--------------------------------------------------------------
 # Single Blog Post
 --------------------------------------------------------------*/
+
 .single-blog-post .page-header {
     background: url("images/single-courses-bg.jpg") no-repeat center;
 }
@@ -2136,7 +2199,7 @@ ul.black-doted {
 .single-blog-post .featured-image {
     position: relative;
     margin-top: -80px;
-    box-shadow: 0 24px 38px rgba(81,107,117,.21);
+    box-shadow: 0 24px 38px rgba(81, 107, 117, .21);
 }
 
 .single-blog-post .featured-image img {
@@ -2232,7 +2295,7 @@ ul.black-doted {
     background: #f3f3f3;
 }
 
-@media screen and (max-width: 992px){
+@media screen and (max-width: 992px) {
     .single-blog-post .featured-image {
         margin-top: 80px;
     }
@@ -2279,7 +2342,8 @@ ul.black-doted {
     border-radius: 50%;
     border: 1px solid #ebebeb;
 }
- ul.author-social-profile {
+
+ul.author-social-profile {
     list-style: none;
 }
 
@@ -2327,9 +2391,11 @@ ul.author-social-profile li:hover .fa {
     line-height: 1.8;
 }
 
+
 /*
 # Comments
 --------------------------------*/
+
 .post-comments-wrap .post-comments {
     margin-top: 40px;
     padding-top: 50px;
@@ -2437,9 +2503,11 @@ ul.author-social-profile li:hover .fa {
     width: calc(100% - 92px);
 }
 
+
 /*
 # Comment Form
 --------------------------------*/
+
 .comments-form {
     margin-top: 50px;
 }
@@ -2497,16 +2565,18 @@ ul.author-social-profile li:hover .fa {
     background: #19c880;
 }
 
+
 /*--------------------------------------------------------------
 # Contact Page
 --------------------------------------------------------------*/
+
 .contact-page .page-header {
     background: url(images/courses-header.jpg) no-repeat center;
 }
 
 .contact-page .contact-gmap {
     margin-top: 60px;
-    box-shadow: 0 24px 38px rgba(81,107,117,.21);
+    box-shadow: 0 24px 38px rgba(81, 107, 117, .21);
 }
 
 .contact-page .contact-gmap iframe {
@@ -2600,15 +2670,16 @@ ul.author-social-profile li:hover .fa {
     .contact-form {
         padding-right: 40px;
     }
-
     .contact-info {
         padding-left: 40px;
     }
 }
 
+
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
+
 .footer-widgets {
     padding: 60px 0;
     color: #757686;

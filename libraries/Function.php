@@ -112,7 +112,7 @@
 
         // begin to print
         foreach($courses_info as $key => $value) {
-            
+            $time = strtotime($value['created_at']);
             echo '<!-- .col -->
              <div class="course-content flex flex-wrap justify-content-between align-content-lg-stretch">
                  <figure class="course-thumbnail">
@@ -132,16 +132,19 @@
                         <!-- .course-ratings -->
                         <h2 class="entry-title"><a href="#">'.$value['name'].'</a></h2>
                         <div class="entry-meta flex flex-wrap align-items-center">
-                        <div class="course-author"><a href="#"></a></div>
-                        <div class="course-date">Aug 21, 2018</div>
+                        <div class="course-date">' . date("M", $time) . " " . date("d", $time) . " " . date("Y", $time) . '</div>
                         </div>
                         <!-- .course-date -->
                     </header>
                     <!-- .entry-header -->
                     <footer class="entry-footer flex justify-content-between align-items-center">
                         <div class="course-cost">
-                        $5 <span class="price-drop">$78</span>
-                        </div>
+                        $'.$value['price'] * (1 - $value['discount']);
+                        if($value['price'] * (1 - $value['discount']) <  $value['price']) {
+                            echo '<span class="price-drop">$'. $value['price'] .'</span>';
+
+                        }
+                        '</div>
                         <!-- .course-cost -->
                     </footer>
                     <!-- .entry-footer -->
@@ -149,6 +152,7 @@
                 <!-- .course-content-wrap -->
             </div>
             <!-- course content -->';
+
         }
     }
 ?>
