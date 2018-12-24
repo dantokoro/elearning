@@ -138,12 +138,12 @@
                 echo '<!-- .col -->
                 <div class="course-content flex flex-wrap justify-content-between align-content-lg-stretch">
                     <figure class="course-thumbnail">
-                        <a href="#"><img src='. $value['avatar'] .' alt=""></a>
+                        <a href="single_course.php?id='.$value['course_id'].'"><img src='. $value['avatar'] .' alt=""></a>
                     </figure>
                     <!-- .course-thumbnail -->
                     <div class="course-content-wrap">
                         <header class="entry-header">
-                            <h2 class="entry-title"><a href="#">'.$value['name'].'</a></h2>
+                            <h2 class="entry-title"><a href="single_course.php?id='.$value['course_id'].'">'.$value['name'].'</a></h2>
                             <div class="entry-meta flex flex-wrap align-items-center">
                             <div class="course-date">' . date("M", $time) . " " . date("d", $time) . " " . date("Y", $time) . '</div>
                             </div>
@@ -178,5 +178,47 @@
 
             }
         }
+    }
+
+    function print_a_course($course_info) 
+    {
+        $time = strtotime($course_info['created_at']);
+        echo '<div class="col-md-6">';
+        echo '<div class="course-content flex flex-wrap justify-content-between align-content-lg-stretch">';
+        echo '<figure class="course-thumbnail">';
+        echo '<a href="single_course.php?id='.$course_info['course_id'].'"><img src='. $course_info['avatar'] .' alt=""></a>';
+        echo '</figure>';
+        echo '<!-- .course-thumbnail -->';
+                echo   '<div class="course-content-wrap">';
+                        echo '<header class="entry-header">';
+                            echo '<h2 class="entry-title"><a href="single_course.php?id='.$course_info['course_id'].'">'.$course_info['name'].'</a></h2>';
+                            echo '<div class="entry-meta flex flex-wrap align-items-center">';
+                            echo '<div class="course-date">' . date("M", $time) . " " . date("d", $time) . " " . date("Y", $time) . '</div>';
+                            echo '</div>';
+                            echo '<!-- .course-date -->';
+                        echo '</header>';
+                        echo '<!-- .entry-header -->';
+                        echo '<footer class="entry-footer flex justify-content-between align-items-center">';
+                        echo '<div class="row">';
+                            echo '<div class="course-cost">';
+                            echo '$'.$course_info['price'] * (1 - $course_info['discount']);
+                            if($course_info['price'] * (1 - $course_info['discount']) <  $course_info['price'])
+                                echo '<span class="price-drop">$'. $course_info['price'] .'</span>';
+                            
+                            echo   '</div> <!-- .course-cost -->
+                        </div> <br><!-- row -->
+                        <div class="course-ratings flex align-items-center">
+                        ';
+                        print_rating($course_info['avg'], $course_info['count']);
+                        echo ' 
+                        </div> <!-- .course-ratings -->
+
+                        </footer>
+                        <!-- .entry-footer -->
+                    </div>
+                    <!-- .course-content-wrap -->
+                </div>
+                <!-- course content -->';
+                echo '</div>';
     }
 ?>

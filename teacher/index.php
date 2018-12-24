@@ -98,39 +98,20 @@
          </div>
          <!-- row -->
          <div class="row">
-         <div id="myCarousel" class="carousel slide" data-ride="carousel">
-            <!-- Indicators -->
-            <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-            </ol>
+         <?php
+            $table = array('"AssignTeacher"', '"Course"', '"Vote"');
+            $query = "SELECT {$table[1]}.*, AVG(rate) as avg, COUNT(*) FROM {$table[1]} JOIN {$table[2]} ON {$table[1]}.course_id = {$table[2]}.course_id GROUP BY {$table[1]}.course_id HAVING {$table[1]}.course_id IN(SELECT course_id FROM {$table[0]} WHERE teacher_id = $1) ORDER BY AVG(rate) LIMIT 6";
+            pg_prepare($conn, "best course", $query);
+            $result = pg_execute($conn, "best course",array($user_id));
+            $info = pg_fetch_all($result);
+            //print_r($info);
+            foreach($info as $value) {
+               print_a_course($value);
+            }
+         ?>
+   <section>
 
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner">
-               <div class="item active">  
-                  <!-- carousel item -->
-               </div>
-            
-            </div>
-
-            <!-- Left and right controls -->
-            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-            <span class="sr-only">Previous</span>
-            </a>
-            <a class="right carousel-control" href="#myCarousel" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right"></span>
-            <span class="sr-only">Next</span>
-            </a>
-        </div>
-        </div>
-         </div>
-         <!-- row -->
-      </div>
-      <!-- container -->
    </section>
-   <!-- .courses-wrap -->
    <section class="about-section">
       <div class="container">
          <div class="row">
@@ -180,7 +161,7 @@
                            $rating = pg_fetch_array($result);
 
                            if(isset($rating['avg'])) {
-                              echo $rating['avg'].'<span></span>';
+                              echo round($rating['avg'], 2).'<span></span>';
                               echo '<p>Average rating</p>';
                            } else {
                               echo '0<p>Average rating</p>';
