@@ -15,7 +15,7 @@
 
     <script type="text/javascript" charset="utf-8" language="javascript" src="src/js/jquery.dataTables.js"></script>
     <script type="text/javascript" charset="utf-8" language="javascript" src="src/js/DT_bootstrap.js"></script>
-    <script type='text/javascript' language='javascript' src='js/ndhui.js'></script>
+    <script type='text/javascript' language='javascript' src='src/js/ndhui.js'></script>
 
 
     <!--slider -->

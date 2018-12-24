@@ -36,3 +36,8 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 -->
 </head>
+
+<?php
+    include '../admin/connect.php';
+    include 'autoload/autoload.php';
+?>

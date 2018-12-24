@@ -26,13 +26,18 @@
     <!-- Styles -->
     <link rel="stylesheet" href="src/css/profile.css">
     
+        <!-- Angular -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
     <!-- Jquery -->
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+    <script src="http://malsup.github.com/jquery.form.js"></script>
 
-    <!-- Angular -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
 -->
 </head>
 
@@ -54,12 +59,13 @@
 ?>
 
 <body>
-<div class="container emp-profile">
-    <form method="post">
-        <div class="row">
+
+<div class="container emp-profile" ng-app="cerApp" ng-controller="cerController">
+    <form class="form-horizontal" method="post" enctype="multipart/form-data">
+        <div class="row"  style="height:200px;">
             <div class="col-md-4">
                 <div class="profile-img">
-                    <?php echo '<img src="'.$info['picture'].'" alt=""/>' ?>
+                    <?php echo '<img id="pic" src="'.$info['picture'].'" alt=""/>' ?>
                     <div class="file btn btn-lg btn-primary">
                         Change Photo
                         <input type="file" name="file"/>
@@ -80,7 +86,7 @@
                                     $rank = pg_fetch_array($result);
 
                                     if($rank['avg'] == 0) {
-                                        echo '<span>Dont have rank now</span>';
+                                        echo '<span>Unranked now</span>';
                                     } else {
                                         echo '<span>'. round($rank['avg']) .'5</span></p>';
                                     }
@@ -89,70 +95,73 @@
                         <li class="nav-item">
                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
-                        </li>
                     </ul>
                 </div>
             </div>
             <div class="col-md-2">
-                <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+                <button type="button" class="btn submit_btn" ng-click="save()">Save</button>         
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
-                <div class="profile-work">
-                    <p>WORK LINK</p>
-                    <p>SKILLS</p>
-                </div>
+            
             </div>
             <div class="col-md-8">
                 <div class="tab-content profile-tab" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                <div class="row">
-                                    <div class="col-md-6" style="padding: 10px;">
-                                        <label>User Id</label>
+                                <div class="row" style="margin-bottom: 10px;">
+                                    <div class="col-md-6">
+                                        <label style="text-align: left;">User Id</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <p> <?php echo $info['teacher_id']; ?> </p>
-                                    </div>
-                                </div>
-                                <div class="row" style="padding: 10px;">
-                                    <div class="col-md-6">
-                                        <label>Name</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input type="text" name="name" value="<?php echo $info['name']; ?>" style="border: 2px solid; border-radius: 20px; text-align:center; font-size:12px;" required>
+                                        <p id="teacher_id"> <?php echo $info['teacher_id']; ?> </p>
                                     </div>
                                 </div>
-                                <div class="row" style="padding: 10px;">
+                                <div class="row" style="margin-bottom: 10px;">
                                     <div class="col-md-6">
-                                        <label>Email</label>
+                                        <label style="text-align: left;">Name</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" name="name" value="<?php echo $info['email']; ?>" style="border: 2px solid; border-radius: 20px; text-align:center; font-size:12px;" required>
-                                    </div>
-                                </div>
-                                <div class="row" style="padding: 10px;">
-                                    <div class="col-md-6">
-                                        <label>Phone</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input type="text" name="name" value="<?php echo $info['phone'];?>" style="border: 2px solid; border-radius: 20px; text-align:center; font-size:12px;" required>
+                                        <input type="text" name="name" id="name" value="<?php echo $info['name']; ?>" style="border: 2px solid; border-radius: 20px; text-align:center; font-size:12px;" required>
                                     </div>
                                 </div>
-                                <div class="row" style="padding: 10px;">
+                                <div class="row" style="margin-bottom: 10px;">
                                     <div class="col-md-6">
-                                        <label>Address</label>
+                                        <label style="text-align: left;">Email</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" name="name" value="<?php echo $info['address'];?>" style="border: 2px solid; border-radius: 20px; text-align:center; font-size:12px;" required>
+                                        <input type="text" name="email" id="email" value="<?php echo $info['email']; ?>" style="border: 2px solid; border-radius: 20px; text-align:center; font-size:12px;" required>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-bottom: 10px;">
+                                    <div class="col-md-6">
+                                        <label style="text-align: left;">Password</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" name="password" id="password" value="<?php echo $info['password'];?>" style="border: 2px solid; border-radius: 20px; text-align:center; font-size:12px;" required>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-bottom: 10px;">
+                                    <div class="col-md-6">
+                                        <label style="text-align: left;">Phone</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" name="phone" id="phone" value="<?php echo $info['phone'];?>" style="border: 2px solid; border-radius: 20px; text-align:center; font-size:12px;" required>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-bottom: 10px;">
+                                    <div class="col-md-6">
+                                        <label style="text-align: left;">Address</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" name="address" id="address" value="<?php echo $info['address'];?>" style="border: 2px solid; border-radius: 20px; text-align:center; font-size:12px;" required>
                                     </div>
                                 </div>
                     </div>
                     <script>
                         var app = angular.module('cerApp', []);
-                            app.controller('cerController', function($scope) {
+                            app.controller('cerController', function($scope, $http) {
+                                $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
                                 $scope.Cers = [];
                                 $scope.addElement = function() {
                                     $scope.Cers.push({
@@ -161,37 +170,91 @@
                                     });
                                     $scope.id+=1;
                                 };
+
+                                $scope.removeElement = function() {
+                                    $scope.Cers.pop();
+                                };
+                                
+                                $scope.save = function() {
+                                    $scope.data = {};
+                                    $scope.certificates = [];
+                                    
+                                    $scope.data['name'] = document.getElementById("name").value;
+                                    $scope.data['email'] = document.getElementById("email").value;
+                                    $scope.data['password'] = document.getElementById("password").value;
+                                    $scope.data['phone'] = document.getElementById("phone").value;
+                                    $scope.data['phone'] = document.getElementById("address").value;
+                                    var temp = document.getElementsByName("certificate");
+
+                                    for(var i = 0; i < temp.length; i++) {
+                                        $scope.certificates.push(temp[i].value);
+                                    }                            
+
+                                                                    
+                                    $scope.data['certificates'] = $scope.certificates.join(", ");
+
+                                    
+                                    /*
+                                    console.log("message=" + $.param($scope.data));
+                                    check if function running right
+                                    */
+                                    // post request
+                                    
+                                    
+                                    $http({
+                                        url: 'edit_profile.php',
+                                        method: "POST",
+                                        data: {
+                                            name: $scope.data['name'],
+                                            email:  $scope.data['email'],
+                                            password: $scope.data['password'],
+                                            phone: $scope.data['phone'],
+                                            address: $scope.data['phone'],
+                                            certificates: $scope.data['certificates']
+                                        }
+                                    }) .then(function(response){
+                                        console.log(response);
+                                    });
+                                };
                             });
                     </script>
 
-                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label>Certificates</label>
+                                        <label style="text-align: left;">Certificates</label>
                                     </div>
                                     <div class="col-md-6">
                                         <?php
                                             $certificates = explode(",", $info['certificate']);
                                             if(is_array($certificates) || is_object($certificates)) {
                                                 foreach($certificates as $key => $value) {
-                                                    echo '<input type="text" name="name" value="' . $value . '" style="border: 2px solid; border-radius: 20px; text-align:center; font-size:12px; margin-bottom: 10px;" required><br>';
+                                                    echo '<input type="text" name="certificate" id="certificate" value="' . $value . '" style="border: 2px solid; border-radius: 20px; text-align:center; font-size:12px; margin-bottom: 10px;" required><br>';
                                                 }
                                             }
                                         ?>
                                         <div ng-repeat="cer in Cers">
                                             <div class="item">
-                                                <input type="text" name="name" style="border: 2px solid; border-radius: 20px; text-align:center; font-size:12px; margin-bottom: 10px;">
+                                                <input type="text" name="certificate" id="certificate" style="border: 2px solid; border-radius: 20px; text-align:center; font-size:12px; margin-bottom: 10px;" ng-model="cer.Name">
                                             </div>
                                         </div>
-                                        <div style="margin-bottom: 10px">
-                                            <button ng-click="addElement()">+</button>
+                                        <div class="row">
+                                            <div class="col-md-3" style="margin-bottom: 10px">
+                                                <button type="button" class="btn btn-default btn-lg" ng-click="addElement()" style="width:50px; height:40px; position:relative; width:90px;">
+                                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                                </button>
+                                        </div>
+                                        <div class="col-md-3" style="margin-bottom: 10px">
+                                            <button type="button" class="btn btn-default btn-lg" ng-click="removeElement()" style="width:50px; height:40px; margin:auto; width:90px;">
+                                                <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                                            </button>
+                                        </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label>Total Courses</label>
+                                        <label style="text-align: left;">Total Courses</label>
                                     </div>
                                     <div class="col-md-6">
                                         <p>
@@ -206,13 +269,11 @@
                                             ?>
                                         </p>
                                     </div>
-                                </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </form>           
 </div>
 
 </body>

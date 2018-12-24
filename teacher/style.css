@@ -2795,3 +2795,25 @@ p.footer-copyright {
     left: 25%;
     transform: translate(-50%, -10%);
 }
+
+.half {
+    position: relative;
+}
+
+.font {
+    font-size: 6em;
+}
+
+.half:before {
+    content: "\e006";
+    /* put here default icon code*/
+    width: 47%;
+    display: block;
+    position: absolute;
+    overflow: hidden;
+}
+
+.half:after {
+    content: "\e007";
+    /* put here icon-empty code*/
+}

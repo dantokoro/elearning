@@ -11,7 +11,7 @@
                 <nav class="site-navigation flex justify-content-end align-items-center">
                     <ul class="flex flex-column flex-lg-row justify-content-lg-end align-content-center" style="padding-left: 10px;">
                         <li class="current-menu-item"><a href="index.php">Home</a></li>
-                        <li><a href="about.php">About</a></li>
+                        <li><a href="../user/about.php">About</a></li>
                         <li><a href="courses.php">Courses</a></li>
                         <li><a href="../user/contact.php">Contact</a></li>
                     </ul>
@@ -23,7 +23,7 @@
                     </div><!-- .hamburger-menu -->
 
                     <div class="header-bar-cart">
-                        <a href="#" class="flex justify-content-center align-items-center"><span aria-hidden="true" class="icon_bag_alt"></span></a>
+                        <a href="logout.php" class="flex justify-content-center align-items-center"><span aria-hidden="true" class="glyphicon glyphicon-log-out" style="font-size:12px">LOG OUT</span></a>
                     </div><!-- .header-bar-search -->
                 </nav><!-- .site-navigation -->
             </div><!-- .col -->

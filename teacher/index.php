@@ -2,6 +2,7 @@
    require('header.php');
    ob_start();
    session_start();
+
    if(isset($_SESSION['username'])) {
       $username = $_SESSION['username'];
    }
@@ -68,7 +69,7 @@
                      </header>
                      <!-- .entry-header -->
                      <footer class="entry-footer read-more">
-                        <a href="#">Create</a>
+                        <a href="add_course">Create</a>
                      </footer>
                      <!-- .entry-footer -->
                   </div>
@@ -137,26 +138,54 @@
                <header class="heading">
                   <h2 class="entry-title">Your achievement</h2>
                   <p>All of achievement you have made</p>
+                  <hr>
                </header>
                <!-- .heading -->
                <div class="entry-content ezuca-stats">
                   <div class="stats-wrap flex flex-wrap justify-content-lg-between">
                      <div class="stats-count">
                         <!-- Learning student -->
-                        50<span>M+</span>
-                        <p>STUDENTS LEARNING</p>
+                        <?php
+                           $table = array('"Enrolled"', '"AssignTeacher"');
+                           $query = "SELECT count(*) FROM {$table[0]} WHERE course_id IN ( SELECT course_id FROM {$table[1]} WHERE teacher_id = $1)"; 
+                           pg_prepare($conn, "archieve", $query);
+                           $result = pg_execute($conn, "archieve", array($user_id));
+                           $teacher_info = pg_fetch_array($result);
+                        
+                           echo $teacher_info['count'].'<span>+</span>' ?>
+                        <p>Student Learning</p>
                      </div>
                      <!-- .stats-count -->
                      <div class="stats-count">
                         <!-- Number of courses -->
-                        30<span>K+</span>
-                        <p>ACTIVE COURSES</p>
+                        <?php 
+                           $table = '"AssignTeacher"';
+                           $query = "SELECT count(*) FROM {$table} WHERE teacher_id = $1";
+                           pg_prepare($conn, "courses", $query);
+                           $result = pg_execute($conn, "courses", array($user_id));
+                           $active_courses = pg_fetch_array($result);
+
+                           echo $active_courses['count'].'<span>+</span>';
+                        ?>
+                        <p>Active Courses</p>
                      </div>
                      <!-- .stats-count -->
                      <div class="stats-count">
                         <!-- Average rating -->
-                        340<span>M+</span>
-                        <p>INSTRUCTORS ONLINE</p>
+                        <?php 
+                           $table = array('"Vote"', '"AssignTeacher"');
+                           $query = "SELECT AVG(rate) FROM {$table[0]} WHERE course_id IN ( SELECT course_id FROM {$table[1]} WHERE teacher_id = $1)";
+                           pg_prepare($conn, "rating", $query);
+                           $result = pg_execute($conn, "rating", array($user_id));
+                           $rating = pg_fetch_array($result);
+
+                           if(isset($rating['avg'])) {
+                              echo $rating['avg'].'<span></span>';
+                              echo '<p>Average rating</p>';
+                           } else {
+                              echo '0<p>Average rating</p>';
+                           }
+                        ?>
                      </div>
                      <!-- .stats-count -->
                      <!-- <div class="stats-count">
