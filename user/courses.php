@@ -86,7 +86,7 @@
                     <div class="row">
                         <div class="col-9 col-lg-3">
                             <div class="site-branding">
-                                <h1 class="site-title"><a href="index.html" rel="home">Dabaki<span>Academy</span></a></h1>
+                                <h1 class="site-title"><a href="index_login.php" rel="home">Dabaki<span>Academy</span></a></h1>
                             </div><!-- .site-branding -->
                         </div><!-- .col -->
 
@@ -153,7 +153,7 @@
 								$start=($page-1)*$limit;	
 							}
 							else{
-								$page=1
+								$page=1;
 								$start=0;
 							}
 							if(isset($_GET['c'])){					// Kiểm tra xem có chọn category nào không
@@ -170,7 +170,7 @@
 									}
 								}
 								else{
-									echo 'No course for this category.';
+									echo 'There is no course left.';
 								}
 							} else{
 								$query='SELECT * 
@@ -199,7 +199,7 @@
                             <li class="active"><a href="courses.php?page=1<?php if(isset($_GET['c'])){echo "&c={$_GET['c']}";	} ?>">1</a></li>
 							<?php
 								for($i=2;$i<=((int)($quantity/$limit)+1);$i++){
-									echo '<li><a href="courses.php?page=1';
+									echo '<li><a href="courses.php?page='.$i;
 									if(isset($_GET['c'])){
 										echo "&c={$_GET['c']}";
 									}
@@ -207,10 +207,7 @@
 								}
 							?>
                             <li><a href="courses.php<?php
-								if(isset($_GET['page'])){echo '?page='.$_GET['page']+1;	}
-									else{
-										echo '?page=2';
-									}
+								echo '?page='.($page+1);	
 								if(isset($_GET['c'])){echo "&c={$_GET['c']}";	}
 							?>"><i class="fa fa-angle-right"></i></a></li>
                         </ul>
@@ -239,53 +236,6 @@
                         </ul>
                     </div><!-- .cat-links -->
 
-                    <div class="latest-courses">
-                        <h2>Latest Courses</h2>
-
-                        <ul class="p-0 m-0">
-                            <li class="flex flex-wrap justify-content-between align-items-center">
-                                <img src="images/t-1.jpg" alt="">
-
-                                <div class="content-wrap">
-                                    <h3><a href="#">The Complete Financial Analyst Training</a></h3>
-
-                                    <div class="course-cost free-cost">Free</div>
-                                </div><!-- .content-wrap -->
-                            </li>
-
-                            <li class="flex flex-wrap justify-content-between align-items-center">
-                                <img src="images/t-2.jpg" alt="">
-
-                                <div class="content-wrap">
-                                    <h3><a href="#">Complete Java
-                                        Masterclass</a></h3>
-
-                                    <div class="course-cost free-cost">Free</div>
-                                </div><!-- .content-wrap -->
-                            </li>
-
-                            <li class="flex flex-wrap justify-content-between align-items-center">
-                                <img src="images/t-3.jpg" alt="">
-
-                                <div class="content-wrap">
-                                    <h3><a href="#">The Complete Digital Marketing Course</a></h3>
-
-                                    <div class="course-cost">$24</div>
-                                </div><!-- .content-wrap -->
-                            </li>
-
-                            <li class="flex flex-wrap justify-content-between align-items-center">
-                                <img src="images/t-4.jpg" alt="">
-
-                                <div class="content-wrap">
-                                    <h3><a href="#">Photoshop CC 2018
-                                        MasterClass</a></h3>
-
-                                    <div class="course-cost">$18</div>
-                                </div><!-- .content-wrap -->
-                            </li>
-                        </ul>
-                    </div><!-- .latest-courses -->
 
                     <div class="ads">
                         <img src="images/ads.jpg" alt="">

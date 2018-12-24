@@ -227,11 +227,8 @@
 											?></a></div>
                             </div><!-- .author-wrap -->
                         </div><!-- .course-author -->
-
-                        <div class="course-cats mt-3">
-                            <label class="m-0">Categories</label>
-                            <div class="author-name"><a href="#"></a><?php	
-							$query_category='SELECT category 
+						<?php	
+							$query_category='SELECT * 
 											FROM "Category"
 											WHERE category_id IN(
 															SELECT category_id
@@ -239,20 +236,24 @@
 															WHERE course_id='.$id.')';			
 							$result = pg_query($con,$query_category) or die(pg_errormessage($con));
 							$category = pg_fetch_assoc($result);					// Lấy Category
-							echo $category["category"];
-					?></div>
+							?>
+                        <div class="course-cats mt-3"> 
+                            <label class="m-0">Categories</label>
+                            <div class="author-name"><?php echo '<a href="courses.php?c='.$category["category_id"].'">';
+								 echo $category["category"];	?>	 
+							</a></div>
                         </div><!-- .course-cats -->
 
                         <div class="course-students mt-3">
                             <label class="m-0">Student</label>
-                            <div class="author-name"><a href="#"><?php
+                            <div class="author-name"><?php
 								$query_regis='	SELECT COUNT(student_id) 
 												FROM "Enrolled" 
 												WHERE course_id='.$id;
 								$result = pg_query($con,$query_regis) or die(pg_errormessage($con));
 								$regis_num = pg_fetch_assoc($result);				//Lấy số học sinh đăng kí khóa học 
 								echo $regis_num["count"];
-							?> (REGISTERED)</a></div>
+							?> (REGISTERED)</div>
                         </div><!-- .course-students -->
 
                         <div class="buy-course mt-3">
