@@ -51,8 +51,29 @@
 
                             <div class="header-bar-menu">
                                 <ul class="flex justify-content-center align-items-center py-2 pt-md-0">
-                                    <li><a href="#">Register</a></li>
-                                    <li><a href="#">Login</a></li>
+                                    <?php
+										require('login/db.php');
+										require('func.php');
+										session_start();
+										if(isset($_SESSION['email']) && $_SESSION['email']){
+											echo '<li><a>Hello ';
+											$email=$_SESSION['email'];
+											$query='SELECT name FROM "Student" WHERE email='.$email ;
+											$result = pg_query($con,$query) or die(pg_errormessage($con));
+											if (pg_num_rows($result) > 0) {
+												$info = pg_fetch_assoc($result);
+												$mang_ho_ten= explode(" ", $info["name"]);
+												$so_phan_tu = count($mang_ho_ten);
+												$ten = $mang_ho_ten[$so_phan_tu-1];
+												echo $ten;
+											}
+											echo '</a></li>
+													<li><a href="login/logout.php">Logout </a></li>';											
+										}													
+										else{
+											echo '<li><a href="login/login2.php">Register/Login</a></li>';                                    
+										}
+									?>
                                 </ul>
                             </div><!-- .header-bar-menu -->
                         </div><!-- .col -->
@@ -65,14 +86,14 @@
                     <div class="row">
                         <div class="col-9 col-lg-3">
                             <div class="site-branding">
-                                <h1 class="site-title"><a href="index.php" rel="home">Dabaki<span>Academy</span></a></h1>
+                                <h1 class="site-title"><a href="index_login.php" rel="home">Dabaki<span>Academy</span></a></h1>
                             </div><!-- .site-branding -->
                         </div><!-- .col -->
 
                         <div class="col-3 col-lg-9 flex justify-content-end align-content-center">
                             <nav class="site-navigation flex justify-content-end align-items-center">
                                 <ul class="flex flex-column flex-lg-row justify-content-lg-end align-content-center">
-                                    <li class="current-menu-item"><a href="index.php">Home</a></li>
+                                    <li class="current-menu-item"><a href="index_login.php">Home</a></li>
                                     <li><a href="about.php">About</a></li>
                                     <li><a href="courses.php">Courses</a></li>
                                     <li><a href="blog.php">Ask&Ans</a></li>
@@ -105,34 +126,39 @@
 										require('login/db.php');
 										if(isset($_GET['id'])){
 											$id=$_GET['id'];
-											$query="SELECT * FROM courses WHERE CID=$id" ;
-											$result = mysqli_query($con,$query) or die(mysqli_error($con));
-											if (mysqli_num_rows($result) > 0) {
-												while($course = mysqli_fetch_assoc($result)) {	
-													echo $course["CName"];
-													}
+											$query= 'SELECT * FROM "Course" WHERE course_id='.$id ;	// Lấy info của course
+											$result = pg_query($con,$query) or die(pg_errormessage($con));
+											if (pg_num_rows($result) > 0) {
+												$course = pg_fetch_assoc($result);
+												echo $course["name"];
+													
 											}
 										}	?></h1>
 
                             <div class="ratings flex justify-content-center align-items-center">
-                                <?php	
-											$result = mysqli_query($con,$query) or die(mysqli_error($con));
-											if (mysqli_num_rows($result) > 0) {
-												while($course = mysqli_fetch_assoc($result)) {	
-													$star=$course["rating"];
-													for($i=0;$i<$star;$i++){	
-														echo '<i class="fa fa-star"></i>';
-													}
-													for($i=0;$i<(5-$star);$i++){ 
-														echo '<span class="fa fa-star-o"></span>';
-													}
-													}
+                                <?php		
+											$query= '	SELECT AVG(rate), COUNT(*)
+														FROM "Vote"
+														WHERE course_id='.$id ;						
+											$result = pg_query($con,$query) or die(pg_errormessage($con));
+											$rating = pg_fetch_assoc($result);					// Lấy rating của course
+											if (pg_num_rows($result) > 0) {
+													$rate = $rating["avg"];
+													$star=(int)$rate;
+														
 											} else {
-												echo "0 results";
-												}
+													$star=0;
+												}	
+											for($i=0;$i<$star;$i++){	
+													echo '<i class="fa fa-star"></i>';
+													}
+											for($i=0;$i<(5-$star);$i++){ 
+													echo '<span class="fa fa-star-o"></span>';
+													}
+
 											
 								?>
-                                <span>(4 votes)</span>
+                                <span><?php	echo '('.$rating["count"].' votes)'  ?></span>
                             </div><!-- .ratings -->
                         </header><!-- .entry-header -->
                     </div><!-- .col -->
@@ -145,17 +171,19 @@
         <div class="row">
             <div class="col-12 offset-lg-1 col-lg-10">
                 <div class="featured-image">
-                    <img src="images/single-course-featured-img.jpg" alt="">
+                    <img src="<?php echo $course["cover"];	?>" alt="">	
 
                     <div class="course-cost"><?php	
-											$result = mysqli_query($con,$query) or die(mysqli_error($con));
-											if (mysqli_num_rows($result) > 0) {
-												while($course = mysqli_fetch_assoc($result)) {	
+											
 													$price=$course["price"];
 													$discount=$course["discount"];
-													echo $price*(100-$discount)*0.01 ."$";
-											}
-											}
+													
+													if( $discount==100){
+														  echo '<span class="free-cost">Free</span>';
+													  }else{
+														echo $price*(100-$discount)*0.01 ."$";
+													  }   
+											
 					?></div>
                 </div>
             </div><!-- .col -->
@@ -175,23 +203,27 @@
                     </ul>
                 </div><!-- .post-share -->
             </div><!-- .col -->
-
+				<?php
+							$query_teacher='SELECT * 
+											FROM "Teacher" 
+											WHERE teacher_id IN( 
+																SELECT teacher_id 
+																FROM "AssignTeacher" 
+																WHERE course_id='.$id.')';			
+							$result = pg_query($con,$query_teacher) or die(pg_errormessage($con));
+							$teacher = pg_fetch_assoc($result); 					//Lấy info teacher
+				?>
             <div class="col-12 col-lg-8">
                 <div class="single-course-wrap">
                     <div class="course-info flex flex-wrap align-items-center">
                         <div class="course-author flex flex-wrap align-items-center mt-3">
-                            <img src="images/1.jpg" alt="">
+                            <img src="<?php echo $teacher["picture"];	?>" alt="">		
 
                             <div class="author-wrap">
                                 <label class="m-0">Teacher</label>
                                 <div class="author-name"><a href="#"><?php
-											$query_teacher="SELECT * FROM `teacher` WHERE TID IN( SELECT TID FROM courses WHERE CID=$id )";
-											$result = mysqli_query($con,$query_teacher) or die(mysqli_error($con));
-											if (mysqli_num_rows($result) > 0) {
-												while($teacher = mysqli_fetch_assoc($result)) {	
-													echo $teacher["name"];
-											}
-											}
+											
+												echo $teacher["name"];
 											?></a></div>
                             </div><!-- .author-wrap -->
                         </div><!-- .course-author -->
@@ -199,25 +231,27 @@
                         <div class="course-cats mt-3">
                             <label class="m-0">Categories</label>
                             <div class="author-name"><a href="#"></a><?php	
-											$result = mysqli_query($con,$query) or die(mysqli_error($con));
-											if (mysqli_num_rows($result) > 0) {
-												while($course = mysqli_fetch_assoc($result)) {	
-													echo $course["category"];
-											}
-											}
+							$query_category='SELECT category 
+											FROM "Category"
+											WHERE category_id IN(
+															SELECT category_id
+															FROM "CourseCategory"
+															WHERE course_id='.$id.')';			
+							$result = pg_query($con,$query_category) or die(pg_errormessage($con));
+							$category = pg_fetch_assoc($result);					// Lấy Category
+							echo $category["category"];
 					?></div>
                         </div><!-- .course-cats -->
 
                         <div class="course-students mt-3">
                             <label class="m-0">Student</label>
                             <div class="author-name"><a href="#"><?php
-								$query_regis="SELECT COUNT(cid) FROM assignstudent WHERE cid IN ( SELECT cid FROM courses WHERE CID=$id)";
-								$result = mysqli_query($con,$query_regis) or die(mysqli_error($con));
-								if (mysqli_num_rows($result) > 0) {
-									while($regis_num = mysqli_fetch_assoc($result)) {
-										echo $regis_num["COUNT(cid)"];
-									}
-								}									
+								$query_regis='	SELECT COUNT(student_id) 
+												FROM "Enrolled" 
+												WHERE course_id='.$id;
+								$result = pg_query($con,$query_regis) or die(pg_errormessage($con));
+								$regis_num = pg_fetch_assoc($result);				//Lấy số học sinh đăng kí khóa học 
+								echo $regis_num["count"];
 							?> (REGISTERED)</a></div>
                         </div><!-- .course-students -->
 
@@ -230,52 +264,48 @@
                         <h2>What Will I Learn? </h2>
 
                         <ul class="p-0 m-0 green-ticked">
-                            <li>Learn C++, the games industry standard language.</li>
-                            <li>Develop strong and transferrable problem solving skills.</li>
-                            <li>Gain an excellent knowledge of modern game development.</li>
-                            <li>Learn how object oriented programming works in practice.</li>
-                            <li>Gain a more fundamental understanding of computer operation.</li>
+						<?php
+							$query_goal='SELECT * 
+									FROM "CourseArchievement"
+									WHERE course_id='.$id;
+							$result = pg_query($con,$query_goal) or die(pg_errormessage($con));
+							if (pg_num_rows($result) > 0) {
+								while($goal = pg_fetch_assoc($result)) {					// Lấy mục tiêu của khóa học
+									echo '<li>'.$goal["description"].'</li>';
+								}
+							}
+						?>	
                         </ul>
 
                         <h2>Requirements</h2>
 
                         <ul class="p-0 m-0 black-doted">
-                            <li>64-bit PC capable of running Unreal 4 (recommended).</li>
-                            <li>Or a Mac capable of running Unreal 4 (must support Metal).</li>
-                            <li>About 15GB of free disc space.</li>
+						<?php
+							$query_require='SELECT * 
+											FROM "CourseRequirement"
+											WHERE course_id='.$id;
+							$result = pg_query($con,$query_require) or die(pg_errormessage($con));
+							if (pg_num_rows($result) > 0) {
+								while($requirement = pg_fetch_assoc($result)) {					// Lấy mục tiêu của khóa học
+									echo '<li>'.$requirement["description"].'</li>';
+								}
+							}
+						?>	
                         </ul>
-
+						
                         <h2>Description</h2>
-
-                        <p>EW Testing Grounds FPS shipped, including...</p>
-                        <p>Much more C++ and Blueprint.</p>
-                        <p>AI Blackboards & Behavior Trees.</p>
-                        <p>Environmental Query System (EQS).</p>
-                        <p>Humanoid Animation Blending.</p>
-                        <p>Never-ending Level Design.</p>
-                        <p>The course now has high quality hand written subtitles throughout, available as closed captions so you can turn them on or off at your convenience.</p>
-                        <p>This course started as a runaway success on Kickstarter. Get involved now, and get access to all future content as it's added. The final course will be over 50 hours of content and 300+ lectures.</p>
-                        <p>Learn how to create and mod video games using Unreal Engine 4, the free-to-use game development platform used by AAA studios and indie developers worldwide.</p>
-                        <p>We start super simple so you need no prior experience of Unreal or coding! With our online tutorials, you'll be amazed what you can achieve.</p>
-                        <p>Benefit from our world-class support from both other students, and the instructors who are on the forums regularly. Go on to build several games including a tank game, and a First Person Shooter.</p>
-                        <p>You will have access to a course forum where you can discuss topics on a course-wide basis, or down to the individual video. Our thriving discussion forum will help you learn and share ideas with other students.</p>
-                        <p>You will learn C++, the powerful industry standard language from scratch. By the end of the course you'll be very confident in the basics of coding and game development, and hungry to learn more.</p>
-                        <p>"Any serious game programmer needs to know C++"Jason Gregory, Lead Programmer at Naughty Dog (creators of Uncharted & The Last of Us)</p>
-                        <p>Anyone who wants to learn to create games: Unreal Engine is a fantastic platform which enables you to make AAA-quality games. Furthermore these games can be created for Windows, consoles, MacOS, iOS, Android and Web from a single source!</p>
-                        <p>If you're a complete beginner, we'll teach you all the coding and game design principles you'll need. If you're an artist, we'll teach you to bring your assets to life. If you're a coder, we'll teach you game design principles.</p>
-                        <p>What this course DOESN'T cover...</p>
-                        <p>Whereas this course is already huge, we can't possibly cover everything in that time. Here are some things we will not be covering...</p>
-
-                        <h2>Who is the target audience?</h2>
-
-                        <ul class="p-0 m-0 black-doted">
-                            <li>Competent and confident with using a computer.</li>
-                            <li>Artists who want to bring their assets alive in a game engine.</li>
-                            <li>Developers who want to re-skill across to coding.</li>
-                            <li>Complete beginners who are willing to work hard.</li>
-                            <li>Existing programmers who want to re-skill to game development.</li>
-                        </ul>
-                    </div>
+						<?php
+							$query_des='SELECT * 
+											FROM "CourseDescription"
+											WHERE course_id='.$id;
+							$result = pg_query($con,$query_des) or die(pg_errormessage($con));
+							if (pg_num_rows($result) > 0) {
+								while($description = pg_fetch_assoc($result)) {					// Lấy description
+									echo $description["description"];
+								}
+							}
+						?>	
+                        <p></p>
 
                     <div class="single-course-accordion-cont mt-3">
                         <header class="entry-header flex flex-wrap justify-content-between align-items-center">

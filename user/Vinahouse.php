@@ -106,9 +106,9 @@
 							<?php	
 								require('login/db.php');
 								$query = "SELECT rating FROM courses WHERE Cname='Vinahouse' ";		//Lấy rating
-								$result = mysqli_query($con,$query) or die(mysqli_error($con));
-								if (mysqli_num_rows($result) > 0) {
-									while($row = mysqli_fetch_assoc($result)) {	
+								$result = pg_query($con,$query) or die(pg_errormessage($con));
+								if (pg_num_rows($result) > 0) {
+									while($row = pg_fetch_assoc($result)) {	
 										$star=$row["rating"];
 										for($i=0;$i<$star;$i++){	
 											echo '<i class="fa fa-star"></i>';
@@ -178,12 +178,12 @@
                             <label class="m-0">Student</label>
 							<?php
 								require('login/db.php');
-								$query="SELECT COUNT(cid) FROM assignstudent WHERE cid IN ( SELECT cid FROM courses WHERE CName='Vinahouse')";
-								$result = mysqli_query($con,$query) or die(mysqli_error($con));
-								if (mysqli_num_rows($result) > 0) {
-									while($regis_num = mysqli_fetch_assoc($result)) {	
+								$query="SELECT COUNT(cid) as cnt FROM assignstudent WHERE cid IN ( SELECT cid FROM courses WHERE CName='Vinahouse')";
+								$result = pg_query($con,$query) or die(pg_errormessage($con));
+								if (pg_num_rows($result) > 0) {
+									while($regis_num = pg_fetch_assoc($result)) {	
 							?>
-								 <div class="author-name"><a href="#"><?php echo $regis_num["COUNT(cid)"]; ?> (REGISTERED)</a></div>
+								 <div class="author-name"><a href="#"><?php echo $regis_num['cnt']; ?> (REGISTERED)</a></div>
 							<?php			}
 								} else {
 									echo "0 results";

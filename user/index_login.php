@@ -24,6 +24,9 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="style.css">
+	
+	<!-- Styles cho tabs -->
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body>
     <div class="hero-content">
@@ -50,21 +53,29 @@
                             </div><!-- .header-bar-search -->
                             <div class="header-bar-menu">
                                 <ul class="flex justify-content-center align-items-center py-2 pt-md-0">
-                                    <li><a>Hello <?php
+									<?php
 										require('login/db.php');
+										require('func.php');
 										session_start();
-										$email=$_SESSION['username'];
-										$query="SELECT name FROM student WHERE email='$email'" ;
-										$result = mysqli_query($con,$query) or die(mysqli_error($con));
-										if (mysqli_num_rows($result) > 0) {
-											$info = mysqli_fetch_assoc($result);
-											$mang_ho_ten= explode(" ", $info["name"]);
-											$so_phan_tu = count($mang_ho_ten);
-											$ten = $mang_ho_ten[$so_phan_tu-1];
-											echo $ten;
+										if(isset($_SESSION['email']) && $_SESSION['email']){
+											echo '<li><a>Hello ';
+											$email=$_SESSION['email'];
+											$query='SELECT name FROM "Student" WHERE email='.$email ;
+											$result = pg_query($con,$query) or die(pg_errormessage($con));
+											if (pg_num_rows($result) > 0) {
+												$info = pg_fetch_assoc($result);
+												$mang_ho_ten= explode(" ", $info["name"]);
+												$so_phan_tu = count($mang_ho_ten);
+												$ten = $mang_ho_ten[$so_phan_tu-1];
+												echo $ten;
+											}
+											echo '</a></li>
+													<li><a href="login/logout.php">Logout </a></li>';											
+										}													
+										else{
+											echo '<li><a href="login/login2.php">Register/Login</a></li>';                                    
 										}
-										?></a></li>
-										<li><a href="index.php">Log Out </a></li>
+									?>
                                 </ul>
                             </div><!-- .header-bar-menu -->
                         </div><!-- .col -->
@@ -77,14 +88,14 @@
                     <div class="row">
                         <div class="col-9 col-lg-3">
                             <div class="site-branding">
-                                <h1 class="site-title"><a href="index.php" rel="home">Dabaki<span>Academy</span></a></h1>
+                                <h1 class="site-title"><a href="index_login.php" rel="home">Dabaki<span>Academy</span></a></h1>
                             </div><!-- .site-branding -->
                         </div><!-- .col -->
 
                         <div class="col-3 col-lg-9 flex justify-content-end align-content-center">
                             <nav class="site-navigation flex justify-content-end align-items-center">
                                 <ul class="flex flex-column flex-lg-row justify-content-lg-end align-content-center">
-                                    <li class="current-menu-item"><a href="index.php">Home</a></li>
+                                    <li class="current-menu-item"><a href="index_login.php">Home</a></li>
                                     <li><a href="about.php">About</a></li>
                                     <li><a href="courses.php">Courses</a></li>
                                     <li><a href="blog.php">Ask&ans</a></li>
@@ -123,7 +134,7 @@
                             </div><!-- .entry-content -->
 
                             <footer class="entry-footer read-more">
-                                <a href="#">read more</a>
+                                <a href="courses.php">find more</a>
                             </footer><!-- .entry-footer -->
                         </div><!-- .hero-content-wrap -->
                     </div><!-- .col -->
@@ -230,268 +241,140 @@
 
                         <nav class="courses-menu mt-3 mt-lg-0">
                             <ul class="flex flex-wrap justify-content-md-end align-items-center">
-                                <li class="active"><a href="#">All</a></li>
-                                <li><a href="#">Business</a></li>
-                                <li><a href="#">Design</a></li>
-                                <li><a href="#">Web Development</a></li>
-                                <li><a href="#">Photography</a></li>
+								
+										<div class="w3-container">
+										  <div class="w3-row">
+											<a href="javascript:void(0)" onclick="openCity(event, 'All');">
+											  <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">All</div>
+											</a>
+											<a href="javascript:void(0)" onclick="openCity(event, 'Business');">
+											  <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Business</div>
+											</a>
+											<a href="javascript:void(0)" onclick="openCity(event, 'Language');">
+											  <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Language</div>
+											</a>
+											<a href="javascript:void(0)" onclick="openCity(event, 'Dancing');">
+											  <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Dancing</div>
+											</a>
+											<a href="javascript:void(0)" onclick="openCity(event, 'Philosophy');">
+											  <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Philosophy</div>
+											</a>
+											
+										  </div>
+
+										  
+										</div>
+							
+                                
                             </ul>
                         </nav><!-- .courses-menu -->
                     </header><!-- .heading -->
                 </div><!-- .col -->
-
-				<?php
-					$query_top1_id="	SELECT CID, COUNT(sid) 						
-										FROM assignstudent 
-										GROUP BY CID
-										HAVING COUNT(SID)>=ALL(SELECT COUNT(sid) 
-																FROM assignstudent 
-																GROUP BY CID)";
-					$result_top1_id= mysqli_query($con,$query_top1_id) or die(mysqli_error($con));
-					$top1_id = mysqli_fetch_assoc($result_top1_id); 
-					$id = $top1_id["CID"];											//id của course được mua nhiều nhất
 					
-					$query_top1_info="SELECT * FROM courses WHERE CID=$id";
-					$result_top1_info= mysqli_query($con,$query_top1_info) or die(mysqli_error($con));
-					$top1_info = mysqli_fetch_assoc($result_top1_info);				// info của course được mua nhiều nhất
-					
-					$query_image = "SELECT * FROM cimage WHERE cid=$id";			
-					$result_image = mysqli_query($con,$query_image) or die(mysqli_error($con));
-					$image = mysqli_fetch_assoc($result_image);						// ảnh
-						
-					$query_teacher = "	SELECT * 
-										FROM teacher
-										WHERE TID IN(
-												SELECT TID 
-												FROM courses
-												WHERE CID=$id
-												)";
-					$result_teacher = mysqli_query($con,$query_teacher) or die(mysqli_error($con));
-					$teacher = mysqli_fetch_assoc($result_teacher);					// info teacher 
-				?>
-                <div class="col-12 col-md-6 col-lg-4 px-25">
-                    <div class="course-content">
-                        <figure class="course-thumbnail">
-                            <a href="#"><img src="<?php echo $image["avatar"]; ?>" alt=""></a>
-                        </figure><!-- .course-thumbnail -->
+				<div id="All" class="w3-container city" style="display:none">
+					<?php	
+						$query='SELECT course_id, COUNT(student_id)
+								FROM "Enrolled"
+								GROUP BY course_id
+								ORDER BY count DESC';
+						$result = pg_query($con,$query) or die(pg_errormessage($con));
+						if (pg_num_rows($result) > 0) {
+							$i=0;
+							while($i<3 && $rank = pg_fetch_assoc($result)) {					// Lấy bảng xếp hạng khóa học đc mua nhiều nhất
+								print_course($rank["course_id"]);
+								$i++;
+							}
+						}
+					?>
+				</div>
+				<div id="Business" class="w3-container city" style="display:none">
+					<?php
+						$query='SELECT course_id, COUNT(student_id)
+								FROM "Enrolled"
+								WHERE course_id IN(
+									SELECT course_id	
+									FROM "CourseCategory"
+									WHERE category_id=1
+								)
+								GROUP BY course_id
+								ORDER BY count DESC';
+						$result = pg_query($con,$query) or die(pg_errormessage($con));
+						if (pg_num_rows($result) > 0) {
+							$i=0;
+							while($i<3 && $rank = pg_fetch_assoc($result)) {					// Lấy bảng xếp hạng khóa học Business đc mua nhiều nhất
+								print_course($rank["course_id"]);
+								$i++;
+							}
+						}
+					?>
+				</div>
 
-                        <div class="course-content-wrap">
-                            <header class="entry-header">
-                                <h2 class="entry-title"><a href="single-courses.php?id=<?php echo $id;?>"><?php echo $top1_info["CName"];	?></a></h2>
-
-                                <div class="entry-meta flex align-items-center">
-                                    <div class="course-author"><a href="#"><?php echo $teacher["name"];	?> </a></div>
-
-                                    <div class="course-date">Nov 21, 2018</div>
-                                </div><!-- .course-date -->
-                            </header><!-- .entry-header -->
-
-                            <footer class="entry-footer flex justify-content-between align-items-center">
-                                <div class="course-cost">
-                                    $4 <span class="price-drop">$68</span>
-                                </div><!-- .course-cost -->
-
-                                <div class="course-ratings flex justify-content-end align-items-center">
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star-o"></span>
-
-                                    <span class="course-ratings-count">(4 votes)</span>
-                                </div><!-- .course-ratings -->
-                            </footer><!-- .entry-footer -->
-                        </div><!-- .course-content-wrap -->
-                    </div><!-- .course-content -->
-                </div><!-- .col -->
-
-                <div class="col-12 col-md-6 col-lg-4 px-25">
-                    <div class="course-content">
-                        <figure class="course-thumbnail">
-                            <a href="#"><img src="images/2.jpg" alt=""></a>
-                        </figure><!-- .course-thumbnail -->
-
-                        <div class="course-content-wrap">
-                            <header class="entry-header">
-                                <h2 class="entry-title"><a href="#">Easy to get 8.0 Ielts</a></h2>
-
-                                <div class="entry-meta flex align-items-center">
-                                    <div class="course-author"><a href="#">Mr. Duc DC</a></div>
-
-                                    <div class="course-date">Aug 21, 2018</div>
-                                </div><!-- .course-date -->
-                            </header><!-- .entry-header -->
-
-                            <footer class="entry-footer flex justify-content-between align-items-center">
-                                <div class="course-cost">
-								 $5 <span class="price-drop">$78</span>
-                                </div><!-- .price-drop -->
-
-                                <div class="course-ratings flex justify-content-end align-items-center">
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star-o"></span>
-
-                                    <span class="course-ratings-count">(3 votes)</span>
-                                </div><!-- .course-ratings -->
-                            </footer><!-- .entry-footer -->
-                        </div><!-- .course-content-wrap -->
-                    </div><!-- .course-content -->
-                </div><!-- .col -->
-
-                <div class="col-12 col-md-6 col-lg-4 px-25">
-                    <div class="course-content">
-                        <figure class="course-thumbnail">
-                            <a href="Vinahouse.php"><img src="images/3.jpg" alt=""></a>
-                        </figure><!-- .course-thumbnail -->
-
-                        <div class="course-content-wrap">
-                            <header class="entry-header">
-                                <h2 class="entry-title"><a href="Vinahouse.php">Basic Vinahouse Dancing</a></h2>
-
-                                <div class="entry-meta flex align-items-center">
-                                    <div class="course-author"><a href="#">Tien Kha Banh</a></div>
-
-                                    <div class="course-date">Aug 18, 2018</div>
-                                </div><!-- .course-date -->
-                            </header><!-- .entry-header -->
-
-                            <footer class="entry-footer flex justify-content-between align-items-center">
-                                <div class="course-cost">
-                                    <span class="free-cost">Free</span>
-                                </div><!-- .course-cost -->
-
-                                <div class="course-ratings flex justify-content-end align-items-center">
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-
-                                    <span class="course-ratings-count">(6 votes)</span>
-                                </div><!-- .course-ratings -->
-                            </footer><!-- .entry-footer -->
-                        </div><!-- .course-content-wrap -->
-                    </div><!-- .course-content -->
-                </div><!-- .col -->
-
-                <div class="col-12 col-md-6 col-lg-4 px-25">
-                    <div class="course-content">
-                        <figure class="course-thumbnail">
-                            <a href="#"><img src="images/4.jpg" alt=""></a>
-                        </figure><!-- .course-thumbnail -->
-
-                        <div class="course-content-wrap">
-                            <header class="entry-header">
-                                <h2 class="entry-title"><a href="#">The Unreal Engine Developer Course</a></h2>
-
-                                <div class="entry-meta flex align-items-center">
-                                    <div class="course-author"><a href="#">Mr. John Wick</a></div>
-
-                                    <div class="course-date">Otc 17, 2018</div>
-                                </div><!-- .course-date -->
-                            </header><!-- .entry-header -->
-
-                            <footer class="entry-footer flex justify-content-between align-items-center">
-                                <div class="course-cost">
-                                    <span class="free-cost">Free</span>
-                                </div><!-- .course-cost -->
-
-                                <div class="course-ratings flex justify-content-end align-items-center">
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star-o"></span>
-
-                                    <span class="course-ratings-count">(4 votes)</span>
-                                </div><!-- .course-ratings -->
-                            </footer><!-- .entry-footer -->
-                        </div><!-- .course-content-wrap -->
-                    </div><!-- .course-content -->
-                </div><!-- .col -->
-
-                <div class="col-12 col-md-6 col-lg-4 px-25">
-                    <div class="course-content">
-                        <figure class="course-thumbnail">
-                            <a href="#"><img src="images/5.jpg" alt=""></a>
-                        </figure><!-- .course-thumbnail -->
-
-                        <div class="course-content-wrap">
-                            <header class="entry-header">
-                                <h2 class="entry-title"><a href="#">Progressive Web Apps (PWA) - The Complete Guide</a></h2>
-
-                                <div class="entry-meta flex align-items-center">
-                                    <div class="course-author"><a href="#">Mr. Tom Redder</a></div>
-
-                                    <div class="course-date">Sep 14, 2018</div>
-                                </div><!-- .course-date -->
-                            </header><!-- .entry-header -->
-
-                            <footer class="entry-footer flex justify-content-between align-items-center">
-                                <div class="course-cost">
-                                    $38 <span class="price-drop">$48</span>
-                                </div><!-- .course-cost -->
-
-                                <div class="course-ratings flex justify-content-end align-items-center">
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star-o"></span>
-
-                                    <span class="course-ratings-count">(4 votes)</span>
-                                </div><!-- .course-ratings -->
-                            </footer><!-- .entry-footer -->
-                        </div><!-- .course-content-wrap -->
-                    </div><!-- .course-content -->
-                </div><!-- .col -->
-
-                <div class="col-12 col-md-6 col-lg-4 px-25">
-                    <div class="course-content">
-                        <figure class="course-thumbnail">
-                            <a href="#"><img src="images/6.jpg" alt=""></a>
-                        </figure><!-- .course-thumbnail -->
-
-                        <div class="course-content-wrap">
-                            <header class="entry-header">
-                                <h2 class="entry-title"><a href="#">Cryptocurrency Investment Course 2018</a></h2>
-
-                                <div class="entry-meta flex align-items-center">
-                                    <div class="course-author"><a href="#">Russell Stephens</a></div>
-
-                                    <div class="course-date">Nov 06, 2018</div>
-                                </div><!-- .course-date -->
-                            </header><!-- .entry-header -->
-
-                            <footer class="entry-footer flex justify-content-between align-items-center">
-                                <div class="course-cost">
-                                    <span class="free-cost">Free</span>
-                                </div><!-- .course-cost -->
-
-                                <div class="course-ratings flex justify-content-end align-items-center">
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star-o"></span>
-
-                                    <span class="course-ratings-count">(4 votes)</span>
-                                </div><!-- .course-ratings -->
-                            </footer><!-- .entry-footer -->
-                        </div><!-- .course-content-wrap -->
-                    </div><!-- .course-content -->
-                </div><!-- .col -->
-
-                <div class="col-12 px-25 flex justify-content-center">
-                    <a class="btn" href="courses.php">view all courses</a>
-                </div><!-- .col -->
+				<div id="Language" class="w3-container city" style="display:none">
+					<?php
+						$query='SELECT course_id, COUNT(student_id)
+								FROM "Enrolled"
+								WHERE course_id IN(
+									SELECT course_id	
+									FROM "CourseCategory"
+									WHERE category_id=2
+								)
+								GROUP BY course_id
+								ORDER BY count DESC';
+						$result = pg_query($con,$query) or die(pg_errormessage($con));
+						if (pg_num_rows($result) > 0) {
+							$i=0;
+							while($i<3 && $rank = pg_fetch_assoc($result)) {					// Lấy bảng xếp hạng khóa học Language đc mua nhiều nhất
+								print_course($rank["course_id"]);
+								$i++;
+							}
+						}
+					?>
+			  </div>
+			  <div id="Dancing" class="w3-container city" style="display:none">
+					<?php
+						$query='SELECT course_id, COUNT(student_id)
+								FROM "Enrolled"
+								WHERE course_id IN(
+									SELECT course_id	
+									FROM "CourseCategory"
+									WHERE category_id=3
+								)
+								GROUP BY course_id
+								ORDER BY count DESC';
+						$result = pg_query($con,$query) or die(pg_errormessage($con));
+						if (pg_num_rows($result) > 0) {
+							$i=0;
+							while($i<3 && $rank = pg_fetch_assoc($result)) {					// Lấy bảng xếp hạng khóa học Language đc mua nhiều nhất
+								print_course($rank["course_id"]);
+								$i++;
+							}
+						}
+					?>
+			  </div><div id="Philosophy" class="w3-container city" style="display:none">
+					<?php
+						$query='SELECT course_id, COUNT(student_id)
+								FROM "Enrolled"
+								WHERE course_id IN(
+									SELECT course_id	
+									FROM "CourseCategory"
+									WHERE category_id=4
+								)
+								GROUP BY course_id
+								ORDER BY count DESC';
+						$result = pg_query($con,$query) or die(pg_errormessage($con));
+						if (pg_num_rows($result) > 0) {
+							$i=0;
+							while($i<3 && $rank = pg_fetch_assoc($result)) {					// Lấy bảng xếp hạng khóa học Language đc mua nhiều nhất
+								print_course($rank["course_id"]);
+								$i++;
+							}
+						}
+					?>
+			  </div>
+				
             </div><!-- .row -->
         </div><!-- .container -->
-    </section><!-- .courses-wrap -->
-
+    </section><!-- .courses-wrap -->             
     
 
     <section class="home-gallery">
@@ -676,6 +559,20 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script type='text/javascript' src='js/masonry.pkgd.min.js'></script>
 <script type='text/javascript' src='js/jquery.collapsible.min.js'></script>
 <script type='text/javascript' src='js/custom.js'></script>
-
+<script>
+function openCity(evt, cityName) {
+  var i, x, tablinks;
+  x = document.getElementsByClassName("city");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < x.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" w3-border-red", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.firstElementChild.className += " w3-border-red";
+}
+</script>
 </body>
 </html>

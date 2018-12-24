@@ -51,7 +51,29 @@
 
                             <div class="header-bar-menu">
                                 <ul class="flex justify-content-center align-items-center py-2 pt-md-0">
-                                     <li><a href="login/login2.php">Register/Login</a></li>
+                                     <?php
+										require('login/db.php');
+										require('func.php');
+										session_start();
+										if(isset($_SESSION['email']) && $_SESSION['email']){
+											echo '<li><a>Hello ';
+											$email=$_SESSION['email'];
+											$query='SELECT name FROM "Student" WHERE email='.$email ;
+											$result = pg_query($con,$query) or die(pg_errormessage($con));
+											if (pg_num_rows($result) > 0) {
+												$info = pg_fetch_assoc($result);
+												$mang_ho_ten= explode(" ", $info["name"]);
+												$so_phan_tu = count($mang_ho_ten);
+												$ten = $mang_ho_ten[$so_phan_tu-1];
+												echo $ten;
+											}
+											echo '</a></li>
+													<li><a href="login/logout.php">Logout </a></li>';											
+										}													
+										else{
+											echo '<li><a href="login/login2.php">Register/Login</a></li>';                                    
+										}
+									?>
                                 </ul>
                             </div><!-- .header-bar-menu -->
                         </div><!-- .col -->
@@ -71,7 +93,7 @@
                         <div class="col-3 col-lg-9 flex justify-content-end align-content-center">
                             <nav class="site-navigation flex justify-content-end align-items-center">
                                 <ul class="flex flex-column flex-lg-row justify-content-lg-end align-content-center">
-                                    <li class="current-menu-item"><a href="index.php">Home</a></li>
+                                    <li class="current-menu-item"><a href="index_login.php">Home</a></li>
                                     <li><a href="about.php">About</a></li>
                                     <li><a href="courses.php">Courses</a></li>
                                     <li><a href="blog.php">ask&ans</a></li>
@@ -124,248 +146,76 @@
             <div class="col-12 col-lg-8">
                 <div class="featured-courses courses-wrap">
                     <div class="row mx-m-25">
-                        
-						<div class="col-12 col-md-6 px-25">
-                            <div class="course-content">
-                                <figure class="course-thumbnail">
-                                    <a href="single-courses.php"><img src="images/1.jpg" alt=""></a>
-                                </figure><!-- .course-thumbnail -->
-
-                                <div class="course-content-wrap">
-                                    <header class="entry-header">
-                                        <h2 class="entry-title"><a href="single-courses.php?id=145">JLPT N1 in 1 month</a></h2>
-                                        <div class="entry-meta flex flex-wrap align-items-center">
-                                            <div class="course-author"><a href="#">Bach Sensei </a></div>
-
-                                            <div class="course-date">July 21, 2018</div>
-                                        </div><!-- .course-date -->
-                                    </header><!-- .entry-header -->
-
-                                    <footer class="entry-footer flex flex-wrap justify-content-between align-items-center">
-                                        <div class="course-cost">
-                                            $45 <span class="price-drop">$68</span>
-                                        </div><!-- .course-cost -->
-
-                                        <div class="course-ratings flex justify-content-end align-items-center">
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star-o"></span>
-
-                                            <span class="course-ratings-count">(4 votes)</span>
-                                        </div><!-- .course-ratings -->
-                                    </footer><!-- .entry-footer -->
-                                </div><!-- .course-content-wrap -->
-                            </div><!-- .course-content -->
-                        </div><!-- .col -->
-
-                        <div class="col-12 col-md-6 px-25">
-                            <div class="course-content">
-                                <figure class="course-thumbnail">
-                                    <a href="#"><img src="images/2.jpg" alt=""></a>
-                                </figure><!-- .course-thumbnail -->
-
-                                <div class="course-content-wrap">
-                                    <header class="entry-header">
-                                        <h2 class="entry-title"><a href="#">The Ultimate Drawing Course Beginner to Advanced</a></h2>
-
-                                        <div class="entry-meta flex flex-wrap align-items-center">
-                                            <div class="course-author"><a href="#">Michelle Golden</a></div>
-
-                                            <div class="course-date">Mar 14, 2018</div>
-                                        </div><!-- .course-date -->
-                                    </header><!-- .entry-header -->
-
-                                    <footer class="entry-footer flex flex-wrap justify-content-between align-items-center">
-                                        <div class="course-cost">
-                                            <span class="free-cost">Free</span>
-                                        </div><!-- .price-drop -->
-
-                                        <div class="course-ratings flex justify-content-end align-items-center">
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star-o"></span>
-
-                                            <span class="course-ratings-count">(4 votes)</span>
-                                        </div><!-- .course-ratings -->
-                                    </footer><!-- .entry-footer -->
-                                </div><!-- .course-content-wrap -->
-                            </div><!-- .course-content -->
-                        </div><!-- .col -->
-
-                        <div class="col-12 col-md-6 px-25">
-                            <div class="course-content">
-                                <figure class="course-thumbnail">
-                                    <a href="#"><img src="images/3.jpg" alt=""></a>
-                                </figure><!-- .course-thumbnail -->
-
-                                <div class="course-content-wrap">
-                                    <header class="entry-header">
-                                        <h2 class="entry-title"><a href="Vinahouse.php">Basic Vinahouse Dancing</a></h2>
-
-                                        <div class="entry-meta flex flex-wrap align-items-center">
-                                            <div class="course-author"><a href="#">Tien Kha Banh</a></div>
-
-                                            <div class="course-date">Aug 18, 2018</div>
-                                        </div><!-- .course-date -->
-                                    </header><!-- .entry-header -->
-
-                                    <footer class="entry-footer flex flex-wrap justify-content-between align-items-center">
-                                        <div class="course-cost">
-											<span class="free-cost">Free</span>
-                                        </div><!-- .course-cost -->
-
-                                        <div class="course-ratings flex justify-content-end align-items-center">
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-
-                                            <span class="course-ratings-count">(6 votes)</span>
-                                        </div><!-- .course-ratings -->
-                                    </footer><!-- .entry-footer -->
-                                </div><!-- .course-content-wrap -->
-                            </div><!-- .course-content -->
-                        </div><!-- .col -->
-
-                        <div class="col-12 col-md-6 px-25">
-                            <div class="course-content">
-                                <figure class="course-thumbnail">
-                                    <a href="#"><img src="images/4.jpg" alt=""></a>
-                                </figure><!-- .course-thumbnail -->
-
-                                <div class="course-content-wrap">
-                                    <header class="entry-header">
-                                        <h2 class="entry-title"><a href="#">The Unreal Engine Developer Course</a></h2>
-
-                                        <div class="entry-meta flex flex-wrap align-items-center">
-                                            <div class="course-author"><a href="#">Mr. John Wick</a></div>
-
-                                            <div class="course-date">Otc 17, 2018</div>
-                                        </div><!-- .course-date -->
-                                    </header><!-- .entry-header -->
-
-                                    <footer class="entry-footer flex flex-wrap justify-content-between align-items-center">
-                                        <div class="course-cost">
-                                            <span class="free-cost">Free</span>
-                                        </div><!-- .course-cost -->
-
-                                        <div class="course-ratings flex justify-content-end align-items-center">
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star-o"></span>
-
-                                            <span class="course-ratings-count">(4 votes)</span>
-                                        </div><!-- .course-ratings -->
-                                    </footer><!-- .entry-footer -->
-                                </div><!-- .course-content-wrap -->
-                            </div><!-- .course-content -->
-                        </div><!-- .col -->
-
-                        <div class="col-12 col-md-6 px-25">
-                            <div class="course-content">
-                                <figure class="course-thumbnail">
-                                    <a href="#"><img src="images/5.jpg" alt=""></a>
-                                </figure><!-- .course-thumbnail -->
-
-                                <div class="course-content-wrap">
-                                    <header class="entry-header">
-                                        <h2 class="entry-title"><a href="#">Progressive Web Apps (PWA) - The Complete Guide</a></h2>
-
-                                        <div class="entry-meta flex flex-wrap align-items-center">
-                                            <div class="course-author"><a href="#">Mr. Tom Redder</a></div>
-
-                                            <div class="course-date">Sep 14, 2018</div>
-                                        </div><!-- .course-date -->
-                                    </header><!-- .entry-header -->
-
-                                    <footer class="entry-footer flex flex-wrap justify-content-between align-items-center">
-                                        <div class="course-cost">
-                                            $38 <span class="price-drop">$48</span>
-                                        </div><!-- .course-cost -->
-
-                                        <div class="course-ratings flex justify-content-end align-items-center">
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star-o"></span>
-
-                                            <span class="course-ratings-count">(4 votes)</span>
-                                        </div><!-- .course-ratings -->
-                                    </footer><!-- .entry-footer -->
-                                </div><!-- .course-content-wrap -->
-                            </div><!-- .course-content -->
-                        </div><!-- .col -->
-
-                        <div class="col-12 col-md-6 px-25">
-                            <div class="course-content">
-                                <figure class="course-thumbnail">
-                                    <a href="#"><img src="images/6.jpg" alt=""></a>
-                                </figure><!-- .course-thumbnail -->
-
-                                <div class="course-content-wrap">
-                                    <header class="entry-header">
-                                        <h2 class="entry-title"><a href="#">Cryptocurrency Investment Course 2018</a></h2>
-
-                                        <div class="entry-meta flex flex-wrap align-items-center">
-                                            <div class="course-author"><a href="#">Russell Stephens</a></div>
-
-                                            <div class="course-date">Nov 06, 2018</div>
-                                        </div><!-- .course-date -->
-                                    </header><!-- .entry-header -->
-
-                                    <footer class="entry-footer flex flex-wrap justify-content-between align-items-center">
-                                        <div class="course-cost">
-                                            <span class="free-cost">Free</span>
-                                        </div><!-- .course-cost -->
-
-                                        <div class="course-ratings flex justify-content-end align-items-center">
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star-o"></span>
-
-                                            <span class="course-ratings-count">(4 votes)</span>
-                                        </div><!-- .course-ratings -->
-                                    </footer><!-- .entry-footer -->
-                                </div><!-- .course-content-wrap -->
-                            </div><!-- .course-content -->
-                        </div><!-- .col -->
+						<?php
+							$limit=6;						// Số course được hiển thị trong 1 trang
+							if(isset($_GET['page'])){
+								$page=$_GET['page'];		// Trang hiện tại
+								$start=($page-1)*$limit;	
+							}
+							else{
+								$page=1
+								$start=0;
+							}
+							if(isset($_GET['c'])){					// Kiểm tra xem có chọn category nào không
+								$query= '	SELECT * FROM "CourseCategory"
+											WHERE category_id='.$_GET['c'].' LIMIT '.$limit.' OFFSET '.$start ;						
+														// Lấy course của category này
+								$result = pg_query($con,$query) or die(pg_errormessage($con));
+								$quantity = pg_num_rows($result);
+								if (pg_num_rows($result) > 0) {
+									$i=0;
+									while($i<$limit && $course = pg_fetch_assoc($result)) {			// Lấy thông tin khóa học
+										print_course($course["course_id"]);
+										$i++;
+									}
+								}
+								else{
+									echo 'No course for this category.';
+								}
+							} else{
+								$query='SELECT * 
+										FROM "Course"'. 
+										' LIMIT '.$limit.' OFFSET '.$start ;
+								$result = pg_query($con,$query) or die(pg_errormessage($con));
+								$quantity = pg_num_rows($result);
+								if (pg_num_rows($result) > 0) {
+									$i=0;
+									while($i<$limit && $course = pg_fetch_assoc($result)) {			// Lấy thông tin khóa học
+										print_course($course["course_id"]);
+										$i++;
+									}
+								}
+							}
+										
+							
+						?>
+						
                     </div><!-- .row -->
                 </div><!-- .featured-courses -->
 
                 <div class="pagination flex flex-wrap justify-content-between align-items-center">
                     <div class="col-12 col-lg-4 order-2 order-lg-1 mt-3 mt-lg-0">
                         <ul class="flex flex-wrap align-items-center order-2 order-lg-1 p-0 m-0">
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+                            <li class="active"><a href="courses.php?page=1<?php if(isset($_GET['c'])){echo "&c={$_GET['c']}";	} ?>">1</a></li>
+							<?php
+								for($i=2;$i<=((int)($quantity/$limit)+1);$i++){
+									echo '<li><a href="courses.php?page=1';
+									if(isset($_GET['c'])){
+										echo "&c={$_GET['c']}";
+									}
+									echo '">'.$i.'</a></li>';
+								}
+							?>
+                            <li><a href="courses.php<?php
+								if(isset($_GET['page'])){echo '?page='.$_GET['page']+1;	}
+									else{
+										echo '?page=2';
+									}
+								if(isset($_GET['c'])){echo "&c={$_GET['c']}";	}
+							?>"><i class="fa fa-angle-right"></i></a></li>
                         </ul>
                     </div>
 
-                    <div class="col-12 flex justify-content-start justify-content-lg-end col-lg-8 order-1 order-lg-2">
-                        <div class="pagination-results flex flex-wrap align-items-center">
-                            <p class="m-0">Showing 1–3 of 12 results</p>
-
-                            <form>
-                                <select>
-                                    <option>Show: 06</option>
-                                    <option>Show: 12</option>
-                                    <option>Show: 18</option>
-                                    <option>Show: 24</option>
-                                </select>
-                            </form>
-                        </div><!-- .pagination-results -->
-                    </div>
                 </div><!-- .pagination -->
             </div><!-- .col -->
 
@@ -382,12 +232,10 @@
                         <h2>Categories</h2>
 
                         <ul class="p-0 m-0">
-                            <li><a href="courses_business.php">Business</a></li>
-                            <li><a href="#">Design</a></li>
-                            <li><a href="#">Marketing</a></li>
-                            <li><a href="#">MBA Courses</a></li>
-                            <li><a href="#">Technology</a></li>
-                            <li><a href="#">Web Development</a></li>
+                            <li><a href="courses.php?c=1">Business</a></li>
+                            <li><a href="courses.php?c=2">Language</a></li>
+                            <li><a href="courses.php?c=3">Dancing</a></li>
+                            <li><a href="courses.php?c=4">Philosophy</a></li>
                         </ul>
                     </div><!-- .cat-links -->
 
