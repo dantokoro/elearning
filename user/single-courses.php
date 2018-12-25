@@ -58,15 +58,14 @@
 										if(isset($_SESSION['email']) && $_SESSION['email']){
 											echo '<li><a>Hello ';
 											$email=$_SESSION['email'];
-											$query='SELECT name FROM "Student" WHERE email='.$email ;
+											$query='SELECT * FROM "Student" WHERE email='.$email ;
 											$result = pg_query($con,$query) or die(pg_errormessage($con));
-											if (pg_num_rows($result) > 0) {
-												$info = pg_fetch_assoc($result);
-												$mang_ho_ten= explode(" ", $info["name"]);
-												$so_phan_tu = count($mang_ho_ten);
-												$ten = $mang_ho_ten[$so_phan_tu-1];
-												echo $ten;
-											}
+											$info = pg_fetch_assoc($result);
+											$mang_ho_ten= explode(" ", $info["name"]);
+											$so_phan_tu = count($mang_ho_ten);
+											$ten = $mang_ho_ten[$so_phan_tu-1];
+											echo $ten;
+											
 											echo '</a></li>
 													<li><a href="login/logout.php">Logout </a></li>';											
 										}													
@@ -80,7 +79,26 @@
                     </div><!-- .row -->
                 </div><!-- .container-fluid -->
             </div><!-- .top-header-bar -->
-
+			<?php
+				if(isset($_SESSION['email']) && $_SESSION['email'] && isset($_GET['id'])){	// Cộng số lần click
+					$email=$_SESSION['email'];
+					$id=$_GET['id'];		// Lấy course_id
+											
+					$query='SELECT * FROM "ClickRecord" WHERE student_id='.$info["student_id"].'AND course_id='.$id ;
+					$result = pg_query($con,$query) or die(pg_errormessage($con));
+					$click_record = pg_fetch_assoc($result);	// Lấy số lần click vào khóa học này
+											
+					if(pg_num_rows($result) > 0){
+						$click=$click_record["click"]+1;		
+						$query='UPDATE "ClickRecord" SET click='.$click. 
+								' WHERE student_id='.$info["student_id"].' AND course_id='.$id;
+						$result = pg_query($con,$query);
+					} else{
+						$query='INSERT INTO "ClickRecord" VALUES ('.$info["student_id"].','.$id.',1)';
+						$result = pg_query($con,$query);
+					}
+				}
+									?>
             <div class="nav-bar">
                 <div class="container">
                     <div class="row">
@@ -158,7 +176,7 @@
 
 											
 								?>
-                                <span><?php	echo '('.$rating["count"].' votes)'  ?></span>
+                                <span><?php	echo '('.$rating["count"].' rates)'  ?></span>
                             </div><!-- .ratings -->
                         </header><!-- .entry-header -->
                     </div><!-- .col -->
@@ -221,7 +239,7 @@
 
                             <div class="author-wrap">
                                 <label class="m-0">Teacher</label>
-                                <div class="author-name"><a href="#"><?php
+                                <div class="author-name"><a href="teacher/teacher.php?id=<?php	echo $teacher['teacher_id'] ?>"><?php
 											
 												echo $teacher["name"];
 											?></a></div>

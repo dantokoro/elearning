@@ -190,8 +190,8 @@
 							
 						?>
 						
-                    </div><!-- .row -->
-                </div><!-- .featured-courses -->
+        </div><!-- .row -->
+    </div><!-- .featured-courses -->
 
                 <div class="pagination flex flex-wrap justify-content-between align-items-center">
                     <div class="col-12 col-lg-4 order-2 order-lg-1 mt-3 mt-lg-0">

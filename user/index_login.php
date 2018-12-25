@@ -60,15 +60,14 @@
 										if(isset($_SESSION['email']) && $_SESSION['email']){
 											echo '<li><a>Hello ';
 											$email=$_SESSION['email'];
-											$query='SELECT name FROM "Student" WHERE email='.$email ;
+											$query='SELECT * FROM "Student" WHERE email='.$email ;
 											$result = pg_query($con,$query) or die(pg_errormessage($con));
-											if (pg_num_rows($result) > 0) {
-												$info = pg_fetch_assoc($result);
-												$mang_ho_ten= explode(" ", $info["name"]);
-												$so_phan_tu = count($mang_ho_ten);
-												$ten = $mang_ho_ten[$so_phan_tu-1];
-												echo $ten;
-											}
+											$info = pg_fetch_assoc($result);
+											$mang_ho_ten= explode(" ", $info["name"]);
+											$so_phan_tu = count($mang_ho_ten);
+											$ten = $mang_ho_ten[$so_phan_tu-1];
+											echo $ten;
+											
 											echo '</a></li>
 													<li><a href="login/logout.php">Logout </a></li>';											
 										}													
@@ -151,82 +150,47 @@
                 <div class="col-12">
                     <header class="heading flex justify-content-between align-items-center">
                         <h2 class="entry-title">We made these courses for you</h2>
-
-                        <a class="btn mt-4 mt-sm-0" href="courses.php">view all</a>
                     </header><!-- .heading -->
                 </div><!-- .col -->
-
-                <div class="col-12 col-lg-6">
-                    <div class="course-content flex flex-wrap justify-content-between align-content-lg-stretch">
-                        <figure class="course-thumbnail">
-                            <a href="#"><img src="images/1.jpg" alt=""></a>
-                        </figure><!-- .course-thumbnail -->
-
-                        <div class="course-content-wrap">
-                            <header class="entry-header">
-                                <div class="course-ratings flex align-items-center">
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star-o"></span>
-
-                                    <span class="course-ratings-count">(4 votes)</span>
-                                </div><!-- .course-ratings -->
-
-                                <h2 class="entry-title"><a href="#">JLPT N1 in 1 month</a></h2>
-
-                                <div class="entry-meta flex flex-wrap align-items-center">
-                                    <div class="course-author"><a href="#">Bach Sensei </a></div>
-
-                                    <div class="course-date">Nov 21, 2018</div>
-                                </div><!-- .course-date -->
-                            </header><!-- .entry-header -->
-
-                            <footer class="entry-footer flex justify-content-between align-items-center">
-                                <div class="course-cost">
-                                    $4 <span class="price-drop">$68</span>
-                                </div><!-- .course-cost -->
-                            </footer><!-- .entry-footer -->
-                        </div><!-- .course-content-wrap -->
-                    </div><!-- .course-content -->
-                </div><!-- .col -->
-
-                <div class="col-12 col-lg-6">
-                    <div class="course-content flex flex-wrap justify-content-between align-content-lg-stretch">
-                        <figure class="course-thumbnail">
-                            <a href="#"><img src="images/2.jpg" alt=""></a>
-                        </figure><!-- .course-thumbnail -->
-
-                        <div class="course-content-wrap">
-                            <header class="entry-header">
-                                <div class="course-ratings flex align-items-center">
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star-o"></span>
-
-                                    <span class="course-ratings-count">(3 votes)</span>
-                                </div><!-- .course-ratings -->
-
-                                <h2 class="entry-title"><a href="#">Easy to get 8.0 Ielts </a></h2>
-
-                                <div class="entry-meta flex flex-wrap align-items-center">
-                                    <div class="course-author"><a href="#">Mr. Duc DC</a></div>
-
-                                    <div class="course-date">Aug 21, 2018</div>
-                                </div><!-- .course-date -->
-                            </header><!-- .entry-header -->
-
-                            <footer class="entry-footer flex justify-content-between align-items-center">
-                                <div class="course-cost">
-								 $5 <span class="price-drop">$78</span>
-                                </div><!-- .course-cost -->
-                            </footer><!-- .entry-footer -->
-                        </div><!-- .course-content-wrap -->
-                    </div><!-- .course-content -->
-                </div><!-- .col -->
+	<?php	
+		$query_rank='SELECT course_id, COUNT(student_id)
+				FROM "Enrolled"
+				GROUP BY course_id
+				ORDER BY count DESC';								// Lấy bảng xếp hạng khóa học đc mua nhiều nhất
+		$result_rank = pg_query($con,$query_rank) or die(pg_errormessage($con));	//(Nếu user chưa login thì suggest bestseller)
+	////////////////////////////////////	
+		if(isset($_SESSION['email']) && $_SESSION['email']){			//(Nếu login rồi)
+			$query='SELECT *
+					FROM "ClickRecord"
+					WHERE student_id='.$info["student_id"].'
+					ORDER BY click DESC' ;							//  Lấy các khóa học được người này xem nhiều nhất
+			$result = pg_query($con,$query) or die(pg_errormessage($con));
+			if (pg_num_rows($result) > 0) {								// Nếu người này đã Click vào 1 số course
+				$i=0;
+				while($i<2 && $suggest = pg_fetch_assoc($result)) {			
+					suggest_course($suggest["course_id"]);
+					$i++;
+				}
+			}
+			else{														// Nếu chưa nhấn course nào -> suggest bestseller
+				if (pg_num_rows($result_rank) > 0) {
+					$i=0;
+					while($i<2 && $rank = pg_fetch_assoc($result_rank)) {					
+						suggest_course($rank["course_id"]);
+						$i++;
+					}
+				}
+			}
+		} else{														//Nếu chưa login -> suggest bestseller
+			if (pg_num_rows($result_rank) > 0) {
+				$i=0;
+				while($i<2 && $rank = pg_fetch_assoc($result_rank)) {					
+					suggest_course($rank["course_id"]);
+					$i++;
+				}
+			}
+		}	
+	?>
             </div><!-- .row -->
         </div><!-- .container -->
     </section><!-- .courses-wrap -->
@@ -259,13 +223,9 @@
 											<a href="javascript:void(0)" onclick="openCity(event, 'Philosophy');">
 											  <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Philosophy</div>
 											</a>
-											
 										  </div>
-
-										  
 										</div>
-							
-                                
+										
                             </ul>
                         </nav><!-- .courses-menu -->
                     </header><!-- .heading -->
@@ -273,14 +233,10 @@
 					
 				<div id="All" class="w3-container city" style="display:none">
 					<?php	
-						$query='SELECT course_id, COUNT(student_id)
-								FROM "Enrolled"
-								GROUP BY course_id
-								ORDER BY count DESC';
-						$result = pg_query($con,$query) or die(pg_errormessage($con));
-						if (pg_num_rows($result) > 0) {
+						$result_rank = pg_query($con,$query_rank) or die(pg_errormessage($con));
+						if (pg_num_rows($result_rank) > 0) {
 							$i=0;
-							while($i<3 && $rank = pg_fetch_assoc($result)) {					// Lấy bảng xếp hạng khóa học đc mua nhiều nhất
+							while($i<3 && $rank = pg_fetch_assoc($result_rank)) {					
 								print_course($rank["course_id"]);
 								$i++;
 							}

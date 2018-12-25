@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Hello World</title>
+    <title>DABAKI ACADEMY</title>
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -51,8 +51,28 @@
 
                             <div class="header-bar-menu">
                                 <ul class="flex justify-content-center align-items-center py-2 pt-md-0">
-                                    <li><a href="#">Register</a></li>
-                                    <li><a href="#">Login</a></li>
+                                    <?php
+										require('login/db.php');
+										require('func.php');
+										session_start();
+										if(isset($_SESSION['email']) && $_SESSION['email']){
+											echo '<li><a>Hello ';
+											$email=$_SESSION['email'];
+											$query='SELECT * FROM "Student" WHERE email='.$email ;
+											$result = pg_query($con,$query) or die(pg_errormessage($con));
+											$info = pg_fetch_assoc($result);
+											$mang_ho_ten= explode(" ", $info["name"]);
+											$so_phan_tu = count($mang_ho_ten);
+											$ten = $mang_ho_ten[$so_phan_tu-1];
+											echo $ten;
+											
+											echo '</a></li>
+													<li><a href="login/logout.php">Logout </a></li>';											
+										}													
+										else{
+											echo '<li><a href="login/login2.php">Register/Login</a></li>';                                    
+										}
+									?>
                                 </ul>
                             </div><!-- .header-bar-menu -->
                         </div><!-- .col -->
@@ -65,26 +85,19 @@
                     <div class="row">
                         <div class="col-9 col-lg-3">
                             <div class="site-branding">
-                                <h1 class="site-title"><a href="index.html" rel="home">Ezu<span>ca</span></a></h1>
+                                <h1 class="site-title"><a href="index_login.php" rel="home">Dabaki<span>Academy</span></a></h1>
                             </div><!-- .site-branding -->
                         </div><!-- .col -->
 
                         <div class="col-3 col-lg-9 flex justify-content-end align-content-center">
                             <nav class="site-navigation flex justify-content-end align-items-center">
                                 <ul class="flex flex-column flex-lg-row justify-content-lg-end align-content-center">
-                                    <li class="current-menu-item"><a href="index.php">Home</a></li>
+                                    <li class="current-menu-item"><a href="index_login.php">Home</a></li>
                                     <li><a href="about.php">About</a></li>
                                     <li><a href="courses.php">Courses</a></li>
                                     <li><a href="blog.php">Ask&Ans</a></li>
                                     <li><a href="contact.php">Contact</a></li>
                                 </ul>
-
-                                <div class="hamburger-menu d-lg-none">
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                </div><!-- .hamburger-menu -->
 
                                 <div class="header-bar-cart">
                                     <a href="#" class="flex justify-content-center align-items-center"><span aria-hidden="true" class="icon_bag_alt"></span></a>
@@ -149,9 +162,9 @@
                     <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia dese mollit anim id est laborum. </p>
 
                     <ul class="p-0 m-0">
-                        <li><span>Location:</span>40 Baria Sreet 133/2 NewYork City, US</li>
-                        <li><span>Email:</span><a href="#">info.deeercreative@gmail.com</a></li>
-                        <li><span>Phone:</span><a href="#">(203) 123-6666</a></li>
+                        <li><span>Location:</span>1 Dai Co Viet, Hanoi, Vietnam</li>
+                        <li><span>Email:</span>duongdang0508@gmail.com</li>
+                        <li><span>Phone:</span>0762122010</li>
                     </ul>
                 </div><!-- .contact-info -->
             </div><!-- .col -->
