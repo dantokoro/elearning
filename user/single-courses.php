@@ -24,6 +24,10 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="style.css">
+    <!-- Jquery Style -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <body class="single-courses-page">
     <div class="page-header">
@@ -40,14 +44,41 @@
                                 <p><i class="fa fa-phone"></i> </p>
                             </div><!-- .header-bar-text -->
                         </div><!-- .col -->
-
+                        <?php
+                        require 'login/db.php';
+                        $table = '"Course"';
+                        $que = "SELECT * FROM $table ";
+                        $result = pg_query($con, $que) or die(pg_errormessage($con));
+                        $json = array();
+                        while ($row = pg_fetch_assoc($result)) {
+                            $new["label"] = $row['name'];
+                            $temp=$row['course_id'];
+                            $new["the_link"] = "single-courses.php?id=$temp";
+                            $json[]= $new;
+                        }
+                        ?>
+                        <script>
+                        $( function() {
+                            var ar= <?php echo json_encode($json,JSON_PRETTY_PRINT) ?>;
+                            $("#myInput").autocomplete({
+                                source: ar,
+                                minLength: 1,
+                                select: function( event, ui) {
+                                    location.href = ui.item.the_link;
+                                }
+                                
+                            });
+                        });
+                        </script>
                         <div class="col-12 col-lg-6 d-flex flex-wrap justify-content-center justify-content-lg-end align-items-center">
                             <div class="header-bar-search">
-                                <form class="flex align-items-stretch">
-                                    <input type="search" placeholder="What would you like to learn?">
-                                    <button type="submit" value="" class="flex justify-content-center align-items-center"><i class="fa fa-search"></i></button>
+                                <form class="flex align-items-stretch" action="search.php" method="GET">
+                                <input id="myInput" type="search" name="query" placeholder="What would you like to learn?">
+
+                                <button type="submit" value="search" class="flex justify-content-center align-items-center"><i class="fa fa-search"></i></button>
                                 </form>
                             </div><!-- .header-bar-search -->
+
 
                             <div class="header-bar-menu">
                                 <ul class="flex justify-content-center align-items-center py-2 pt-md-0">
@@ -67,7 +98,8 @@
 											echo $ten;
 											
 											echo '</a></li>
-													<li><a href="login/logout.php">Logout </a></li>';											
+                                            <li><a href="login/logout.php">Logout </a></li>
+                                            <li><a href="profile_student.php">Profile </a></li>';											
 										}													
 										else{
 											echo '<li><a href="login/login2.php">Register/Login</a></li>';                                    
@@ -84,7 +116,7 @@
 					$email=$_SESSION['email'];
 					$id=$_GET['id'];		// Lấy course_id
 											
-					$query='SELECT * FROM "ClickRecord" WHERE student_id='.$info["student_id"].'AND course_id='.$id ;
+					$query='SELECT * FROM "ClickRecord" WHERE student_id='.$info["student_id"].'AND course_id='.$id;
 					$result = pg_query($con,$query) or die(pg_errormessage($con));
 					$click_record = pg_fetch_assoc($result);	// Lấy số lần click vào khóa học này
 											
@@ -274,8 +306,12 @@
 							?> (REGISTERED)</div>
                         </div><!-- .course-students -->
 
-                        <div class="buy-course mt-3">
-                            <a class="btn" href="#">BUY NOW</a>
+                        <div class="buy-course mt-3"><?php
+                        if(isset($_SESSION['email']) && $_SESSION['email']){
+                            echo '<a class="btn" href="checkout.php?id='.$id.'">BUY NOW</a>';
+                        }
+                        else echo'<p>Log in to buy course</p>';
+                            ?>
                         </div><!-- .buy-course -->
                     </div><!-- .course-info -->
 
