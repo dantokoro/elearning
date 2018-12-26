@@ -100,7 +100,7 @@
                                 <ul class="flex justify-content-center align-items-center py-2 pt-md-0">
 									<?php
 										if(isset($_SESSION['email']) && $_SESSION['email']){
-											echo '<li><a>Hello ';
+											echo '<li><a href="../profile_student.php">Hello ';
 											$email=$_SESSION['email'];
 											$query='SELECT * FROM "Student" WHERE email='.$email ;
 											$result = pg_query($con,$query) or die(pg_errormessage($con));
@@ -111,8 +111,7 @@
 											echo $ten;
 											
 											echo '</a></li>
-                                            <li><a href="login/logout.php">Logout </a></li>
-                                            <li><a href="profile_student.php">Profile </a></li>';											
+                                            <li><a href="login/logout.php">Logout </a></li>';											
 										}													
 										else{
 											echo '<li><a href="../login/login2.php">Register/Login</a></li>';                                    
