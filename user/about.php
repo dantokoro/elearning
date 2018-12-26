@@ -87,21 +87,19 @@
 										require('func.php');
 										session_start();
 										if(isset($_SESSION['email']) && $_SESSION['email']){
-											echo '<li><a>Hello ';
+											echo '<li><a href="profile_student.php">Hello ';
 											$email=$_SESSION['email'];
-											$query='SELECT name FROM "Student" WHERE email='.$email ;
+											$query='SELECT * FROM "Student" WHERE email='.$email ;
 											$result = pg_query($con,$query) or die(pg_errormessage($con));
-											if (pg_num_rows($result) > 0) {
-												$info = pg_fetch_assoc($result);
-												$mang_ho_ten= explode(" ", $info["name"]);
-												$so_phan_tu = count($mang_ho_ten);
-												$ten = $mang_ho_ten[$so_phan_tu-1];
-												echo $ten;
-											}
+											$info = pg_fetch_assoc($result);
+											$mang_ho_ten= explode(" ", $info["name"]);
+											$so_phan_tu = count($mang_ho_ten);
+											$ten = $mang_ho_ten[$so_phan_tu-1];
+											echo $ten;
+											
 											echo '</a></li>
-                                            <li><a href="login/logout.php">Logout </a></li>
-                                            <li><a href="profile_student.php">Profile </a></li>';											
-										}													
+                                                    <li><a href="login/logout.php">Logout </a></li>';											
+										}												
 										else{
 											echo '<li><a href="login/login2.php">Register/Login</a></li>';                                    
 										}

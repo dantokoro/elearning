@@ -25,6 +25,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="style.css">
     
     <!-- Jquery -->
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
@@ -160,7 +161,7 @@
                                 </div>
                                 <div class="row" style="margin-bottom: 10px;">
                                     <div class="col-md-6">
-                                        <label style="text-align: left;">Balance</label>
+                                        <label style="text-align: left;">Balance($)</label>
                                     </div>
                                     <div class="col-md-6">
                                         <input type="text" name="balance" id="balance" value="<?php echo $info['buget'];?>" style="border: 2px solid; border-radius: 20px; text-align:center; font-size:12px;" required>
@@ -220,6 +221,7 @@
                                         }
                                     }) .then(function(response){
                                         console.log(response);
+                                        alert("Edit successful");
                                     });
                                 };
                             });
@@ -276,10 +278,62 @@
                                         </p>
                                     </div>
                         </div>
+                        <div class="row">		<!-- In ra course cua student nay nay	-->
+            <div class="col-12 col-lg-8">
+                <div class="featured-courses courses-wrap">
+                    <div class="row mx-m-25">
+                        <?php
+                            require 'func.php';
+							$limit=3;						// Số course được hiển thị trong 1 trang
+							if(isset($_GET['page'])){
+								$page=$_GET['page'];		// Trang hiện tại
+								$start=($page-1)*$limit;	
+							}
+							else{
+								$page=1;
+								$start=0;
+							}
+							
+							$query='SELECT course_id
+									FROM "Enrolled"
+									WHERE student_id='.$infos.
+									' LIMIT '.$limit.' OFFSET '.$start ;
+							$result = pg_query($con,$query) or die(pg_errormessage($con));
+							$quantity = pg_num_rows($result);
+							if (pg_num_rows($result) > 0) {
+								$i=0;
+								while($i<$limit && $course = pg_fetch_assoc($result)) {			// Lấy thông tin khóa học
+									print_course($course["course_id"]);
+									$i++;
+								}
+							}
+							
+										
+							
+						?>
+						
+					</div><!-- .row -->
+				</div><!-- .featured-courses -->		
+				<div class="pagination flex flex-wrap justify-content-between align-items-center">
+								<div class="col-12 col-lg-4 order-2 order-lg-1 mt-3 mt-lg-0">
+									<ul class="flex flex-wrap align-items-center order-2 order-lg-1 p-0 m-0">
+										<li class="active"><a href="profile_student?page=1">1</a></li>
+										<?php
+											for($i=2;$i<=((int)($quantity/$limit)+1);$i++){
+												echo '<li><a href="profile_student?page='.$i.'">'.$i.'</a></li>';
+											}
+										?>
+										<li><a href="profile_student.php<?php
+											echo '?page='.($page+1);	
+										?>"><i class="fa fa-angle-right"></i></a></li>
+									</ul>
+								</div>
+				</div><!-- .pagination -->
+            </div><!-- .col -->
+    </div><!-- .row -->
                     </div>
                 </div>
             </div>
         </div>
 </div>
-
 </body>

@@ -85,7 +85,7 @@
 										require('func.php');
 										session_start();
 										if(isset($_SESSION['email']) && $_SESSION['email']){
-											echo '<li><a>Hello ';
+											echo '<li><a href="profile_student.php">Hello ';
 											$email=$_SESSION['email'];
 											$query='SELECT * FROM "Student" WHERE email='.$email ;
 											$result = pg_query($con,$query) or die(pg_errormessage($con));
@@ -96,8 +96,7 @@
 											echo $ten;
 											
 											echo '</a></li>
-                                                    <li><a href="login/logout.php">Logout </a></li>
-                                                    <li><a href="profile_student.php">Profile </a></li>';											
+                                                    <li><a href="login/logout.php">Logout </a></li>';											
 										}													
 										else{
 											echo '<li><a href="login/login2.php">Register/Login</a></li>';                                    
@@ -115,14 +114,14 @@
                     <div class="row">
                         <div class="col-9 col-lg-3">
                             <div class="site-branding">
-                                <h1 class="site-title"><a href="index.html" rel="home">Dabaki<span>Academy</span></a></h1>
+                                <h1 class="site-title"><a href="index_login.php" rel="home">Dabaki<span>Academy</span></a></h1>
                             </div><!-- .site-branding -->
                         </div><!-- .col -->
 
                         <div class="col-3 col-lg-9 flex justify-content-end align-content-center">
                             <nav class="site-navigation flex justify-content-end align-items-center">
                                 <ul class="flex flex-column flex-lg-row justify-content-lg-end align-content-center">
-                                    <li class="current-menu-item"><a href="index.php">Home</a></li>
+                                    <li class="current-menu-item"><a href="index_login.php">Home</a></li>
                                     <li><a href="about.php">About</a></li>
                                     <li><a href="courses.php">Courses</a></li>
                                     <li><a href="blog.php">ask&ans</a></li>
@@ -215,13 +214,15 @@
                         <ul class="flex flex-wrap align-items-center order-2 order-lg-1 p-0 m-0">
                             <li class="active"><a href="search_results?page=1<?php if(isset($_GET['query'])){echo "&query={$_GET['query']}";	} ?>">1</a></li>
 							<?php
+                            if(isset($_GET['query'])){
 								for($i=2;$i<=((int)($quantity/$limit)+1);$i++){
 									echo '<li><a href="courses.php?page='.$i;
-									if(isset($_GET['query'])){
+									
 										echo "&query={$_GET['query']}";
-									}
+									
 									echo '">'.$i.'</a></li>';
-								}
+                                }
+                            }
 							?>
                             <li><a href="courses.php<?php
 								echo '?page='.($page+1);	
