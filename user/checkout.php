@@ -136,7 +136,7 @@
                                         <label style="text-align: left;">Current balance</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <p id="cbalance"> <?php echo $info['buget']; ?> </p>
+                                        <p id="cbalance"> <?php echo $info['buget']; ?>$ </p>
                                     </div>
                                 </div>
                                 <div class="row" style="margin-bottom: 10px;">
@@ -153,7 +153,7 @@
                                         <label style="text-align: left;">Balance after purchase</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <p> '.$abalance.'</p>
+                                        <p> '.$abalance.'$</p>
                                         <input type="hidden" name="abalance" id="abalance" value="'.$abalance.'" >
                                         <input type="hidden" name="course_id" id="course_id" value="'.$id.'" >
                                         <input type="hidden" name="student_id" id="student_id" value="'.$sid.'" >
@@ -209,6 +209,7 @@
                                         }
                                     }) .then(function(response){
                                         console.log(response);
+                                        alert("Purchase successful");
                                     });
                                 };
                             });

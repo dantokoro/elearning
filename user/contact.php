@@ -46,6 +46,8 @@
                         </div><!-- .col -->
                         <?php
                         require 'login/db.php';
+						require('func.php');
+						session_start();
                         $table = '"Course"';
                         $que = "SELECT * FROM $table ";
                         $result = pg_query($con, $que) or die(pg_errormessage($con));
@@ -81,12 +83,9 @@
 
                             <div class="header-bar-menu">
                                 <ul class="flex justify-content-center align-items-center py-2 pt-md-0">
-                                    <?php
-										require('login/db.php');
-										require('func.php');
-										session_start();
+                                    <?php										
 										if(isset($_SESSION['email']) && $_SESSION['email']){
-											echo '<li><a>Hello ';
+											echo '<li><a href="profile_student.php">Hello ';
 											$email=$_SESSION['email'];
 											$query='SELECT * FROM "Student" WHERE email='.$email ;
 											$result = pg_query($con,$query) or die(pg_errormessage($con));
@@ -97,8 +96,7 @@
 											echo $ten;
 											
 											echo '</a></li>
-                                            <li><a href="login/logout.php">Logout </a></li>
-                                            <li><a href="profile_student.php">Profile </a></li>';											
+                                                    <li><a href="login/logout.php">Logout </a></li>';											
 										}													
 										else{
 											echo '<li><a href="login/login2.php">Register/Login</a></li>';                                    
@@ -238,11 +236,8 @@
                         <div class="foot-about">
                             <a class="foot-logo" href="#"><img src="images/foot-logo.png" alt=""></a>
 
-                            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia dese mollit anim id est laborum. </p>
 
-                            <p class="footer-copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                            <p class="footer-copyright"></p>
                         </div><!-- .foot-about -->
                     </div><!-- .col -->
 
@@ -251,9 +246,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                             <h2>Contact Us</h2>
 
                             <ul>
-                                <li>Email: info.deertcreative@gmail.com</li>
-                                <li>Phone: (+88) 111 555 666</li>
-                                <li>Address: 40 Baria Sreet 133/2 NewYork City, US</li>
+                                <li>Email: duongdang0508@gmail.com</li>
+                                <li>Phone: 0762122010</li>
+                                <li>Address: 1 Dai Co Viet, Hanoi, Vietnam</li>
                             </ul>
                         </div><!-- .foot-contact -->
                     </div><!-- .col -->
