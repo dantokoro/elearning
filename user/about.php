@@ -182,37 +182,7 @@
                 </div><!-- .about-heading -->
             </div><!-- .col -->
 
-            <div class="col-12 col-lg-6">
-                <div class="about-stories">
-                    <h3>Our Stories</h3>
-
-                    <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium.</p>
-
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis eros lobortis, vestibulum turpis ac, pulvinar odio. </p>
-
-                    <ul class="p-0 m-0 green-ticked">
-                        <li>Learning program with after-school</li>
-                        <li>Positive learning environment</li>
-                        <li>Learning through play</li>
-                    </ul><!-- .green-ticked -->
-                </div><!-- .about-stories -->
-            </div><!-- .col -->
-
-            <div class="col-12 col-lg-6">
-                <div class="about-values">
-                    <h3>Our Stories</h3>
-
-                    <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium.</p>
-
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis eros lobortis, vestibulum turpis ac, pulvinar odio. </p>
-
-                    <ul class="p-0 m-0 green-ticked">
-                        <li>Learning program with after-school</li>
-                        <li>Positive learning environment</li>
-                        <li>Learning through play</li>
-                    </ul><!-- .green-ticked -->
-                </div><!-- .about-values -->
-            </div><!-- .col -->
+           
         </div><!-- .row -->
     </div><!-- .container -->
 
@@ -227,23 +197,47 @@
                     <div class="entry-content ezuca-stats">
                         <div class="stats-wrap flex flex-wrap justify-content-lg-between">
                             <div class="stats-count">
-                                50<span>M+</span>
+                                <?php
+								$query='SELECT COUNT(student_id)
+										FROM "Student"' ;
+								$result = pg_query($con,$query) or die(pg_errormessage($con));
+								$student_num=pg_fetch_assoc($result);
+								echo $student_num["count"];
+							?><span>M</span>
                                 <p>STUDENTS LEARNING</p>
                             </div><!-- .stats-count -->
 
                             <div class="stats-count">
-                                30<span>K+</span>
+                                <?php
+								$query='SELECT COUNT(course_id)
+										FROM "Course"' ;
+								$result = pg_query($con,$query) or die(pg_errormessage($con));
+								$course_num=pg_fetch_assoc($result);
+								echo $course_num["count"];
+							?><span>K</span>
                                 <p>ACTIVE COURSES</p>
                             </div><!-- .stats-count -->
 
                             <div class="stats-count">
-                                340<span>M+</span>
+                                <?php
+								$query='SELECT COUNT(teacher_id)
+										FROM "Teacher"' ;
+								$result = pg_query($con,$query) or die(pg_errormessage($con));
+								$teacher_num=pg_fetch_assoc($result);
+								echo $teacher_num["count"];
+							?><span>M</span>
                                 <p>INSTRUCTORS ONLINE</p>
                             </div><!-- .stats-count -->
 
                             <div class="stats-count">
-                                20<span>+</span>
-                                <p>Country Reached</p>
+                                <?php
+								$query='SELECT COUNT(DISTINCT address)
+										FROM "Student"' ;
+								$result = pg_query($con,$query) or die(pg_errormessage($con));
+								$city_num=pg_fetch_assoc($result);
+								echo $city_num["count"];
+							?><span>+</span>
+                                <p>City Reached</p>
                             </div><!-- .stats-count -->
                         </div><!-- .stats-wrap -->
                     </div><!-- .ezuca-stats -->
@@ -261,87 +255,6 @@
             </div><!-- .row -->
         </div><!-- .container -->
     </section><!-- .about-section -->
-
-    <section class="testimonial-section">
-        <!-- Swiper -->
-        <div class="swiper-container testimonial-slider">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12 col-lg-6 order-2 order-lg-1 flex align-items-center mt-5 mt-lg-0">
-                                <figure class="user-avatar">
-                                    <img src="images/user-1.jpg" alt="">
-                                </figure><!-- .user-avatar -->
-                            </div><!-- .col -->
-
-                            <div class="col-12 col-lg-6 order-1 order-lg-2 content-wrap h-100">
-                                <div class="entry-content">
-                                    <p>Together as teachers, students and universities we can help make this education available for everyone.</p>
-                                </div><!-- .entry-content -->
-
-                                <div class="entry-footer">
-                                    <h3 class="testimonial-user">Russell Stephens - <span>University in UK</span></h3>
-                                </div><!-- .entry-footer -->
-                            </div><!-- .col -->
-                        </div><!-- .row -->
-                    </div><!-- .container -->
-                </div><!-- .swiper-slide -->
-
-                <div class="swiper-slide">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12 col-lg-6 order-2 order-lg-1 flex align-items-center mt-5 mt-lg-0">
-                                <figure class="user-avatar">
-                                    <img src="images/user-2.jpg" alt="">
-                                </figure><!-- .user-avatar -->
-                            </div><!-- .col -->
-
-                            <div class="col-12 col-lg-6 order-1 order-lg-2 content-wrap h-100">
-                                <div class="entry-content">
-                                    <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                </div><!-- .entry-content -->
-
-                                <div class="entry-footer">
-                                    <h3 class="testimonial-user">Robert Stephens - <span>University in Oxford</span></h3>
-                                </div><!-- .entry-footer -->
-                            </div><!-- .col -->
-                        </div><!-- .row -->
-                    </div><!-- .container -->
-                </div><!-- .swiper-slide -->
-
-                <div class="swiper-slide">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12 col-lg-6 flex order-2 order-lg-1 align-items-center mt-5 mt-lg-0">
-                                <figure class="user-avatar">
-                                    <img src="images/user-3.jpg" alt="">
-                                </figure><!-- .user-avatar -->
-                            </div><!-- .col -->
-
-                            <div class="col-12 col-lg-6 order-1 order-lg-2 content-wrap h-100">
-                                <div class="entry-content">
-                                    <p>Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour.</p>
-                                </div><!-- .entry-content -->
-
-                                <div class="entry-footer">
-                                    <h3 class="testimonial-user">James Stephens - <span>University in Cambridge</span></h3>
-                                </div><!-- .entry-footer -->
-                            </div><!-- .col -->
-                        </div><!-- .row -->
-                    </div><!-- .container -->
-                </div><!-- .swiper-slide -->
-            </div><!-- .swiper-wrapper -->
-
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 col-lg-6 mt-5 mt-lg-0">
-                        <div class="swiper-pagination position-relative flex justify-content-center align-items-center"></div>
-                    </div><!-- .col -->
-                </div><!-- .row -->
-            </div><!-- .container -->
-        </div><!-- .testimonial-slider -->
-    </section><!-- .testimonial-section -->
 
     <div class="container">
         <div class="row">
@@ -433,9 +346,8 @@
                     <div class="col-12 col-md-6 col-lg-3">
                         <div class="foot-about">
                             <a class="foot-logo" href="#"><img src="images/foot-logo.png" alt=""></a>
-                            <p class="footer-copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved 
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                            <p class="footer-copyright">
+</p>
                         </div><!-- .foot-about -->
                     </div><!-- .col -->
 
@@ -443,11 +355,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                         <div class="foot-contact">
                             <h2>Contact Us</h2>
 
-                            <ul>
-                                <li>Email: info.deertcreative@gmail.com</li>
-                                <li>Phone: (+88) 111 555 666</li>
-                                <li>Address: 40 Baria Sreet 133/2 NewYork City, US</li>
-                            </ul>
+                                <li>Email: duongdang0508@gmail.com</li>
+                                <li>Phone: 0762122010</li>
+                                <li>Address: 1 Dai Co Viet, Hanoi, Vietnam</li>
                         </div><!-- .foot-contact -->
                     </div><!-- .col -->
 

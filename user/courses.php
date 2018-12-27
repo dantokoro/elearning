@@ -270,18 +270,7 @@
                         <img src="images/ads.jpg" alt="">
                     </div><!-- .ads -->
 
-                    <div class="popular-tags">
-                        <h2>Popular Tags</h2>
-
-                        <ul class="flex flex-wrap align-items-center p-0 m-0">
-                            <li><a href="#">Creative</a></li>
-                            <li><a href="#">Unique</a></li>
-                            <li><a href="#">Photography</a></li>
-                            <li><a href="#">ideas</a></li>
-                            <li><a href="#">Wordpress Template</a></li>
-                            <li><a href="#">startup</a></li>
-                        </ul>
-                    </div><!-- .popular-tags -->
+                    
                 </div><!-- .sidebar -->
             </div><!-- .col -->
         </div><!-- .row -->
@@ -323,11 +312,7 @@
                         <div class="foot-about">
                             <a class="foot-logo" href="#"><img src="images/foot-logo.png" alt=""></a>
 
-                            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia dese mollit anim id est laborum. </p>
-
-                            <p class="footer-copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                            <p class="footer-copyright"></p>
                         </div><!-- .foot-about -->
                     </div><!-- .col -->
 
@@ -336,8 +321,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                             <h2>Contact Us</h2>
 
                             <ul>
-                                <li>Email: info.deertcreative@gmail.com</li>
-                                <li>Phone: (+88) 111 555 666</li>
+                                <li>Email: duongdang0508@gmail.com</li>
+                                <li>Phone: 0762122010</li>
                                 <li>Address: 40 Baria Sreet 133/2 NewYork City, US</li>
                             </ul>
                         </div><!-- .foot-contact -->
