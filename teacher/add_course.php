@@ -67,7 +67,7 @@
 					</div>
 					<div class="row" style="margin-bottom: 10px;">
 						<div class="col-md-6">
-							<label style="text-align: left;">Fee</label>
+							<label style="text-align: left;">Price</label>
 						</div>
 						<div class="col-md-6">
 							<input type="text" name="email" id="fee" style="border: 2px solid; border-radius: 20px; text-align:center; font-size:12px;" required>

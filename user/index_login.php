@@ -49,6 +49,8 @@
                         </div><!-- .col -->
                         <?php
                         require 'login/db.php';
+						require('func.php');
+						session_start();
                         $table = '"Course"';
                         $que = "SELECT * FROM $table ";
                         $result = pg_query($con, $que) or die(pg_errormessage($con));
@@ -84,9 +86,7 @@
                             <div class="header-bar-menu">
                                 <ul class="flex justify-content-center align-items-center py-2 pt-md-0">
 									<?php
-										require('login/db.php');
-										require('func.php');
-										session_start();
+										
 										if(isset($_SESSION['email']) && $_SESSION['email']){
 											echo '<li><a href="profile_student.php">Hello ';
 											$email=$_SESSION['email'];
@@ -241,26 +241,25 @@
 											<a href="javascript:void(0)" onclick="openCity(event, 'All');">
 											  <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">All</div>
 											</a>
-											<a href="javascript:void(0)" onclick="openCity(event, 'Business');">
-											  <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Business</div>
-											</a>
-											<a href="javascript:void(0)" onclick="openCity(event, 'Language');">
-											  <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Language</div>
-											</a>
-											<a href="javascript:void(0)" onclick="openCity(event, 'Dancing');">
-											  <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Dancing</div>
-											</a>
-											<a href="javascript:void(0)" onclick="openCity(event, 'Philosophy');">
-											  <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Philosophy</div>
-											</a>
+											<?php
+													$query_cat= 'SELECT * FROM "Category"';		//Lấy category		
+													$result = pg_query($con,$query_cat) or die(pg_errormessage($con));
+													if (pg_num_rows($result) > 0) {
+														while($category = pg_fetch_assoc($result)) {			// Lấy thông tin khóa học
+															echo '<a href="javascript:void(0)" onclick="openCity(event, '."'".$category["category"]."'".');">
+																	  <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">'.$category["category"].'</div>
+																	</a>';
+														}
+													}
+											?>
+											
 										  </div>
 										</div>
-										
                             </ul>
                         </nav><!-- .courses-menu -->
                     </header><!-- .heading -->
                 </div><!-- .col -->
-					
+				
 				<div id="All" class="w3-container city" style="display:none">
 					<?php	
 						$result_rank = pg_query($con,$query_rank) or die(pg_errormessage($con));
@@ -273,90 +272,35 @@
 						}
 					?>
 				</div>
-				<div id="Business" class="w3-container city" style="display:none">
-					<?php
-						$query='SELECT course_id, COUNT(student_id)
+				<?php
+				
+					$result_cat = pg_query($con,$query_cat) or die(pg_errormessage($con));
+					if (pg_num_rows($result_cat) > 0) {
+						while($category = pg_fetch_assoc($result_cat)) {
+							echo '<div id="'.$category["category"].'" class="w3-container city" style="display:none">';
+							$query='SELECT course_id, COUNT(student_id)
 								FROM "Enrolled"
 								WHERE course_id IN(
 									SELECT course_id	
 									FROM "CourseCategory"
-									WHERE category_id=1
+									WHERE category_id='.$category["category_id"].'
 								)
 								GROUP BY course_id
-								ORDER BY count DESC';
-						$result = pg_query($con,$query) or die(pg_errormessage($con));
-						if (pg_num_rows($result) > 0) {
-							$i=0;
-							while($i<3 && $rank = pg_fetch_assoc($result)) {					// Lấy bảng xếp hạng khóa học Business đc mua nhiều nhất
-								print_course($rank["course_id"]);
-								$i++;
+								ORDER BY count DESC';		// Lấy bxh khóa học theo  Category
+							$result = pg_query($con,$query) or die(pg_errormessage($con));
+							if (pg_num_rows($result) > 0) {
+								$i=0;
+								while($i<3 && $rank = pg_fetch_assoc($result)) {					
+									print_course($rank["course_id"]);
+									$i++;
+								}
 							}
+							echo '</div>';
 						}
-					?>
-				</div>
-
-				<div id="Language" class="w3-container city" style="display:none">
-					<?php
-						$query='SELECT course_id, COUNT(student_id)
-								FROM "Enrolled"
-								WHERE course_id IN(
-									SELECT course_id	
-									FROM "CourseCategory"
-									WHERE category_id=2
-								)
-								GROUP BY course_id
-								ORDER BY count DESC';
-						$result = pg_query($con,$query) or die(pg_errormessage($con));
-						if (pg_num_rows($result) > 0) {
-							$i=0;
-							while($i<3 && $rank = pg_fetch_assoc($result)) {					// Lấy bảng xếp hạng khóa học Language đc mua nhiều nhất
-								print_course($rank["course_id"]);
-								$i++;
-							}
-						}
-					?>
-			  </div>
-			  <div id="Dancing" class="w3-container city" style="display:none">
-					<?php
-						$query='SELECT course_id, COUNT(student_id)
-								FROM "Enrolled"
-								WHERE course_id IN(
-									SELECT course_id	
-									FROM "CourseCategory"
-									WHERE category_id=3
-								)
-								GROUP BY course_id
-								ORDER BY count DESC';
-						$result = pg_query($con,$query) or die(pg_errormessage($con));
-						if (pg_num_rows($result) > 0) {
-							$i=0;
-							while($i<3 && $rank = pg_fetch_assoc($result)) {					// Lấy bảng xếp hạng khóa học Language đc mua nhiều nhất
-								print_course($rank["course_id"]);
-								$i++;
-							}
-						}
-					?>
-			  </div><div id="Philosophy" class="w3-container city" style="display:none">
-					<?php
-						$query='SELECT course_id, COUNT(student_id)
-								FROM "Enrolled"
-								WHERE course_id IN(
-									SELECT course_id	
-									FROM "CourseCategory"
-									WHERE category_id=4
-								)
-								GROUP BY course_id
-								ORDER BY count DESC';
-						$result = pg_query($con,$query) or die(pg_errormessage($con));
-						if (pg_num_rows($result) > 0) {
-							$i=0;
-							while($i<3 && $rank = pg_fetch_assoc($result)) {					// Lấy bảng xếp hạng khóa học Language đc mua nhiều nhất
-								print_course($rank["course_id"]);
-								$i++;
-							}
-						}
-					?>
-			  </div>
+					}
+				?>
+				
+			  
 				
             </div><!-- .row -->
         </div><!-- .container -->
@@ -459,11 +403,8 @@
                         <div class="foot-about">
                             <a class="foot-logo" href="#"><img src="images/foot-logo.png" alt=""></a>
 
-                            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia dese mollit anim id est laborum. </p>
 
-                            <p class="footer-copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                            <p class="footer-copyright"></p>
                         </div><!-- .foot-about -->
                     </div><!-- .col -->
 
@@ -471,11 +412,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                         <div class="foot-contact">
                             <h2>Contact Us</h2>
 
-                            <ul>
-                                <li>Email: info.deertcreative@gmail.com</li>
-                                <li>Phone: (+88) 111 555 666</li>
-                                <li>Address: 40 Baria Sreet 133/2 NewYork City, US</li>
-                            </ul>
+								<li>Email: duongdang0508@gmail.com</li>
+                                <li>Phone: 0762122010</li>
+                                <li>Address: 1 Dai Co Viet, Hanoi, Vietnam</li>
                         </div><!-- .foot-contact -->
                     </div><!-- .col -->
 

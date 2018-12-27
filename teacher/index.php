@@ -69,7 +69,7 @@
                      </header>
                      <!-- .entry-header -->
                      <footer class="entry-footer read-more">
-                        <a href="add_course">Create</a>
+                        <a href="add_course.php">Create</a>
                      </footer>
                      <!-- .entry-footer -->
                   </div>

@@ -317,10 +317,10 @@
 				<div class="pagination flex flex-wrap justify-content-between align-items-center">
 								<div class="col-12 col-lg-4 order-2 order-lg-1 mt-3 mt-lg-0">
 									<ul class="flex flex-wrap align-items-center order-2 order-lg-1 p-0 m-0">
-										<li class="active"><a href="profile_student?page=1">1</a></li>
+										<li class="active"><a href="profile_student.php?page=1">1</a></li>
 										<?php
 											for($i=2;$i<=((int)($quantity/$limit)+1);$i++){
-												echo '<li><a href="profile_student?page='.$i.'">'.$i.'</a></li>';
+												echo '<li><a href="profile_student.php?page='.$i.'">'.$i.'</a></li>';
 											}
 										?>
 										<li><a href="profile_student.php<?php
