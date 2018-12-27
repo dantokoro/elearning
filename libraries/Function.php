@@ -201,9 +201,9 @@
                         echo '<footer class="entry-footer flex justify-content-between align-items-center">';
                         echo '<div class="row">';
                             echo '<div class="course-cost">';
-                            echo '$'.$course_info['price'] * (1 - $course_info['discount']);
+                            echo '<span style="font-size:17px;">$'.$course_info['price'] * (1 - $course_info['discount']) .'</span>';
                             if($course_info['price'] * (1 - $course_info['discount']) <  $course_info['price'])
-                                echo '<span class="price-drop">$'. $course_info['price'] .'</span>';
+                                echo '<span class="price-drop" style="font-size:16px">$'. $course_info['price'] .'</span>';
                             
                             echo   '</div> <!-- .course-cost -->
                         </div> <br><!-- row -->

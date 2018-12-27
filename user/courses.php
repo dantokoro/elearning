@@ -123,7 +123,7 @@
 
                         <div class="col-3 col-lg-9 flex justify-content-end align-content-center">
                             <nav class="site-navigation flex justify-content-end align-items-center">
-                                <ul class="flex flex-column flex-lg-row justify-content-lg-end align-content-center">
+                                <ul class="flex flex-column flex-lg-row justify-content-lg-end align-content-center" style="padding-left: 10px;">
                                     <li class="current-menu-item"><a href="index_login.php">Home</a></li>
                                     <li><a href="about.php">About</a></li>
                                     <li><a href="courses.php">Courses</a></li>

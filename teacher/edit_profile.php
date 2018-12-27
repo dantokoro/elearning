@@ -7,7 +7,7 @@
 
         $user_id = $_SESSION['id'];
         $name = $request->name;
-        $emai = $request->email;
+        $email = $request->email;
         $password = $request->password;
         $phone = $request->phone;
         $address = $request->address;

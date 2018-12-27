@@ -12,6 +12,7 @@
 	session_start();
 	unset($_SESSION['id']);
 	unset($_SESSION['username']);
+
 	?>
 	
 
@@ -21,6 +22,9 @@
 		<h2 class="form-title" id="signup"><span>or</span>Sign up</h2>
 
 		<div class="form-holder">
+			<input type="text" name="name_s" class="input" placeholder="Your name" required />
+			<input type="text" name="address_s" class="input" placeholder="Address" required />
+			<input type="text" name="phone_s" class="input" placeholder="Phone" required />
 			<input type="text" name="email_s" class="input" placeholder="Email" required />
 			<input type="password" name="password_s" class="input" placeholder="Password" required />
 			<input type="password" name="REpassword_s" class="input" placeholder="Enter your password again" required />
@@ -68,6 +72,25 @@
 				session_write_close();
 			} else {
 				session_write_close();
+			}
+		}
+		if(isset($_POST['sign_up'])) {
+			if($_POST['password_s'] == $_POST['REpassword_s']) {
+				$name = $_POST['name_s'];
+				$email = $_POST['email_s'];
+				$password = $_POST['password_s'];
+				$address = $_POST['address_s'];
+				$phone = $_POST['phone_s'];
+				$image = 'https://www.google.com/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwjStqfb47_fAhVD7mEKHYl6APkQjRx6BAgBEAU&url=http%3A%2F%2Ffutbolita.com%2Fabout-us%2Favatar-1577909_960_720%2F&psig=AOvVaw3LvZOftqSu2TBEoD3d-Upp&ust=1545992153958104';
+				
+				$last_id = pg_fetch_array(pg_query('SELECT MAX(teacher_id) FROM "Teacher"'));
+				$last_teacher_id = $last_id['max'] + 1;
+				$table = '"Teacher"';
+				$query = "INSERT INTO $table(teacher_id ,name, phone, email, password, address, created_at, picture) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
+				pg_prepare($conn, "insert", $query);
+				pg_execute($conn, "insert", array($last_teacher_id ,$name, $phone, $email, $password, $address, 'now()', $image));
+			} else {
+				echo '<script>alert("Password does not match"); </script>';
 			}
 		}
 	?>

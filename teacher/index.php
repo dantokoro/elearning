@@ -99,15 +99,19 @@
          <!-- row -->
          <div class="row">
          <?php
+         if(isset($_SESSION['id'])) {
             $table = array('"AssignTeacher"', '"Course"', '"Vote"');
             $query = "SELECT {$table[1]}.*, AVG(rate) as avg, COUNT(*) FROM {$table[1]} JOIN {$table[2]} ON {$table[1]}.course_id = {$table[2]}.course_id GROUP BY {$table[1]}.course_id HAVING {$table[1]}.course_id IN(SELECT course_id FROM {$table[0]} WHERE teacher_id = $1) ORDER BY AVG(rate) LIMIT 6";
             pg_prepare($conn, "best course", $query);
             $result = pg_execute($conn, "best course",array($user_id));
             $info = pg_fetch_all($result);
             //print_r($info);
-            foreach($info as $value) {
-               print_a_course($value);
+            if(is_array($info)) {
+               foreach($info as $value) {
+                  print_a_course($value);
+               }
             }
+         }
          ?>
    <section>
 
